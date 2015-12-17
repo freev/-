@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-17T07:18:26.382Z</updated>
+  <updated>2015-12-17T07:22:26.103Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/16/%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%B8%87%E6%81%B6%E7%9A%84zip/"/>
     <id>http://yoursite.com/2015/12/16/上传之万恶的zip/</id>
     <published>2015-12-16T03:46:22.000Z</published>
-    <updated>2015-12-17T07:18:26.382Z</updated>
+    <updated>2015-12-17T07:22:26.103Z</updated>
     <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
 <h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2><p></p><h4>1,找一张图片命令xxx11.jpg然后压缩<p></p>
 <p></p><h4>2,用二进制文件编辑器打开，我这里用的是UE，ctrl+f查找xxx替换成../，(注意有两处)<p></p>
@@ -65,7 +65,7 @@
     get_zip(&quot;11.zip&quot;,&apos;temp/&apos;);
 ?&gt;
 </code></pre><h2 id="0X03__u6269_u5C55"><a href="#0X03__u6269_u5C55" class="headerlink" title="0X03 扩展"></a>0X03 扩展</h2><p></p><h4>如果我们有权限，也可以在解压目录中创建目录<p></p>
-<p></p><h4>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg<p></p>
+<p></p><h4>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg<br>                                    Author:FreeV<p></p>
 </h4></h4></h4></h4></h4></h4></h4>]]></content>
     <summary type="html">
     <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
