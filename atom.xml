@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-17T07:22:26.103Z</updated>
+  <updated>2015-12-17T07:28:02.584Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/16/%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%B8%87%E6%81%B6%E7%9A%84zip/"/>
     <id>http://yoursite.com/2015/12/16/上传之万恶的zip/</id>
     <published>2015-12-16T03:46:22.000Z</published>
-    <updated>2015-12-17T07:22:26.103Z</updated>
+    <updated>2015-12-17T07:28:02.584Z</updated>
     <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
 <h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2><p></p><h4>1,找一张图片命令xxx11.jpg然后压缩<p></p>
 <p></p><h4>2,用二进制文件编辑器打开，我这里用的是UE，ctrl+f查找xxx替换成../，(注意有两处)<p></p>
@@ -65,8 +65,9 @@
     get_zip(&quot;11.zip&quot;,&apos;temp/&apos;);
 ?&gt;
 </code></pre><h2 id="0X03__u6269_u5C55"><a href="#0X03__u6269_u5C55" class="headerlink" title="0X03 扩展"></a>0X03 扩展</h2><p></p><h4>如果我们有权限，也可以在解压目录中创建目录<p></p>
-<p></p><h4>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg<br>                                    Author:FreeV<p></p>
-</h4></h4></h4></h4></h4></h4></h4>]]></content>
+<p></p><h4>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg<p></p>
+<pre><code>Author:FreeV
+</code></pre></h4></h4></h4></h4></h4></h4></h4>]]></content>
     <summary type="html">
     <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
 <h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784]]>
@@ -110,7 +111,7 @@
     <link href="http://yoursite.com/2015/12/09/php%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/"/>
     <id>http://yoursite.com/2015/12/09/php弱类型安全/</id>
     <published>2015-12-09T04:51:21.000Z</published>
-    <updated>2015-12-17T07:18:32.744Z</updated>
+    <updated>2015-12-17T07:27:15.045Z</updated>
     <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
 <h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p></p><h4>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型<p></p>
 <p></p><h4>例如php 中的当php中使用‘==’时会自动类型转换<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line">true<span class="variable">$b</span>=<span class="string">'1asd'</span>;</span><br><span class="line">true<span class="keyword">if</span> (<span class="number">1</span>==<span class="variable">$b</span>)</span><br><span class="line">truetrueecho <span class="string">"yes"</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p></p>
