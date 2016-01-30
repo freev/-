@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>php弱类型安全 | FreeV&#39;s Blog</title>
+  <title>Archives: 2016 | FreeV&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -88,7 +88,7 @@
 </head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -224,64 +224,38 @@
 		
 
       
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2015-12-09T04:51:21.000Z" itemprop="datePublished">
-          2015-12-09
-      </time>
-    
-    
-    | 
-    <a href='/tags/php代码安全/'>php代码安全</a>
-    
-    
-</span>
-                <h1>php弱类型安全</h1>
-            </div>
-        </div>
-        <div class="col-md-8 col-md-offset-2">
-      		<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p></p><h4>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型<p></p>
-<p></p><h4>例如php 中的当php中使用‘==’时会自动类型转换<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line">true<span class="variable">$b</span>=<span class="string">'1asd'</span>;</span><br><span class="line">true<span class="keyword">if</span> (<span class="number">1</span>==<span class="variable">$b</span>)</span><br><span class="line">truetrueecho <span class="string">"yes"</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p></p>
-<p></p><h4>如下代码都是我在ctf中遇到的题型<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">2</span>.php</span><br><span class="line">&lt;?php </span><br><span class="line"></span><br><span class="line">true<span class="variable">$test</span>=$_GET[<span class="string">'test'</span>]; //test=<span class="number">240610708</span></span><br><span class="line">trueecho <span class="variable">$test</span>.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">true<span class="variable">$test</span>=md5(<span class="variable">$test</span>); </span><br><span class="line">true<span class="keyword">if</span>(<span class="variable">$test</span>==<span class="string">'0'</span>) &#123;   //0exxx=<span class="number">0</span>  <span class="number">240610708</span></span><br><span class="line">truetrueprint <span class="string">"flag&#123;xxxxxx&#125;"</span>;</span><br><span class="line">true&#125;<span class="keyword">else</span> </span><br><span class="line">truetrueprint <span class="string">"you are falied!"</span>;</span><br><span class="line">trueprint <span class="variable">$test</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure><p></p>
-<p></p><h4>test=240610708 就可以绕过了，因为240610708的md5是0e…..php自动类型转换时候就是0<p></p>
-<h2 id="0x01_u7325_u7410_u5229_u7528"><a href="#0x01_u7325_u7410_u5229_u7528" class="headerlink" title="0x01猥琐利用"></a>0x01猥琐利用</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">3.php</span><br><span class="line"><span class="php"><span class="preprocessor">&lt;?php</span> </span><br><span class="line">true<span class="variable">$flag</span>=<span class="string">'xx'</span>;</span><br><span class="line">true<span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">'a'</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">'b'</span>])) &#123;</span><br><span class="line">truetrue<span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">'a'</span>] != <span class="variable">$_GET</span>[<span class="string">'b'</span>])</span><br><span class="line">    	<span class="keyword">if</span> (md5(<span class="variable">$_GET</span>[<span class="string">'a'</span>]) === md5(<span class="variable">$_GET</span>[<span class="string">'b'</span>]))</span><br><span class="line">        	<span class="keyword">echo</span> (<span class="string">'Flag: '</span>.<span class="variable">$flag</span>);</span><br><span class="line">truetrue<span class="keyword">else</span></span><br><span class="line">truetruetrue<span class="keyword">print</span> <span class="string">'Wrong.'</span>;</span><br><span class="line">truetrue&#125;</span><br><span class="line"> <span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p></p><h4>这道题与2.php的区别就是’==’换成了’===’<p></p>
-<p></p><h4>提交a[]=1&amp;&amp;b[]=2,因为cmd5(a[])会报错，‘===’两边同时报错，也就是false===false弹出flag<p></p>
-<pre><code>Author:FreeV
-</code></pre></h4></h4></h4></h4></h4></h4>
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="pagination" role="pagination">
-    
-    <a class="pull-left" href="/2015/12/11/php高级图片隐藏马/" style="float: left;">
-        ← php高级图片隐藏马
-    </a>
-    
-    
-</nav>
 
-        <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2015/12/09/php弱类型安全/" data-title="php弱类型安全" data-url="http://yoursite.com/2015/12/09/php弱类型安全/"></div>
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"freev"};
-(function() {
-	var ds = document.createElement('script');
-	ds.type = 'text/javascript';ds.async = true;
-	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-	ds.charset = 'UTF-8';
-	(document.getElementsByTagName('head')[0] 
-	 || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
-</script>
-</div>
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2016/01/30/一个php木马引发的xxoo/">一个php木马引发的xxoo</a></h4>
+                            
+                            <p><time datetime="2016-01-30T01:27:25.000Z"><a href="/2016/01/30/一个php木马引发的xxoo/">2016-01-30</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>对知识的渴望是你前进的最大动力</p>
+        </div>
     </div>
 </section>
-
 
       
 <!-- ============================ Footer =========================== -->
