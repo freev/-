@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-24T13:48:07.780Z</updated>
+  <updated>2016-08-09T08:59:00.952Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[RSA公钥密码算法原理以及安全性]]></title>
+    <link href="http://yoursite.com/2016/08/09/RSA%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E5%AE%89%E5%85%A8%E6%80%A7/"/>
+    <id>http://yoursite.com/2016/08/09/RSA公钥密码算法原理以及安全性/</id>
+    <published>2016-08-09T08:12:37.000Z</published>
+    <updated>2016-08-09T08:59:00.952Z</updated>
+    <content type="html"><![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
+<h2 id="0x00_RSA_u539F_u7406_u5206_u6790"><a href="#0x00_RSA_u539F_u7406_u5206_u6790" class="headerlink" title="0x00 RSA原理分析"></a>0x00 RSA原理分析</h2><p></p><h4>关于rsa算法的历史这里不再介绍，直接看重点。rsa可以用做公钥密码和数字签名，首先你得知道他是一个公钥加密算法，公钥加密<br>的密钥分为加密的密钥和解密的密钥，也就是公钥和私钥，公钥可以公开的密钥，私钥用作解密的密钥。<h4><p></p>
+<p></p><h4>一,关键词：<br>公钥：数E 和N<br>私钥：数D 和N<br>加密 E次方的mod n<br>解密 D次方mod n<br>具体步骤：<br>1，求N<br>2，求L（在rsa加密解密过程中不出现，而是出现在生成密钥对的过程中）<br>3，求E<br>4，求D<br>二，详细步骤：<br>1，生成p和q为两个大质数，<br>2，N为两数乘积<br>3，L的p-1和q-1的最小公倍数<br>4，E是个比1大比L小的数，且e和L 的最大公约数必须为1<br>5，D是由数E计算得到的,满足1&lt;D&lt;L <p></p>
+<h4>
+
+<h2 id="0x01_RSA_u539F_u7406_u5B9E_u8DF5"><a href="#0x01_RSA_u539F_u7406_u5B9E_u8DF5" class="headerlink" title="0x01 RSA原理实践"></a>0x01 RSA原理实践</h2><p></p><h4>一，分析<br>1，准备两个质数p=17 q=19。 N = p 乘 q=323<br>2，L为p-1和q-1的最小公倍数，L=lcm（p-1，q-1）L=144<br>3，E和L的最大公约数必须为1，gcm（E，L）=1，满足条件的很多： 5，7，11，13，17，19…….。但是 E L必须互为质数  所以为选择5为E<br>4，公钥也就是 E为5 N为323<br>5，求D D必须满足以下条件：E*D mod L=1，28 满足条件，D=28<br>6，所以公钥为（5，323）<br>7，私钥28，323）<br>二，加密过程<br>要加密的明文必须为小于N的数 也就是小于323<br>假设明文为123<br>明文^e mod N= 123^5 mod N=255密文255<br>三，解密过程：<br>D=28，N=323<br>密文^D mod N=255^29 mod 323=123<p></p>
+<p></p><h4><p></p>
+<h2 id="0x03_RSA_u5B89_u5168_u6027"><a href="#0x03_RSA_u5B89_u5168_u6027" class="headerlink" title="0x03 RSA安全性"></a>0x03 RSA安全性</h2><p></p><h4>一，只要知道数D 就能对密文暴力破解 ，当D足够长时就不能在现实的时间内暴力破解找到D。<br>二，通过E和N求D，当知道E和N时是不能破解D的，虽然E，D满足：E*D mod L =1，L为lcmp（p-1，q-1）的值但是 破译者并不知道p 和q。<br>三，当把p和q交给破译者 就相当于把密钥交给了破译者但是N 是公开的 可以通过质因数分解求出p 和q ，所以说一旦发现对大整数进行质因数分解的高效算法rsa是可以破解的<br>通过猜测p 和q 进行破解。<p></p>
+<h4>
+
+<pre><code>Author:FreeV
+</code></pre></h4></h4></h4></h4></h4></h4></h4></h4>]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文总阅读量<span id="busuanzi_value_page_pv"></span>次</p>
+<h2 id="0x00_RSA_u539F_u7406_u5206_u6790"><a href="#0x00_RSA_u539F_u7406_u5206_u6790]]>
+    </summary>
+    
+      <category term="加密解密" scheme="http://yoursite.com/tags/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[git泄漏批量实现]]></title>
