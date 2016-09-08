@@ -80,7 +80,7 @@
 		</span>
   <p class="article-time">
     <time datetime="2016-09-08T05:33:35.000Z" itemprop="datePublished">2016-09-08</time>
-    更新日期:<time datetime="2016-09-08T08:44:27.741Z" itemprop="dateModified">2016-09-08</time>
+    更新日期:<time datetime="2016-09-08T08:57:09.468Z" itemprop="dateModified">2016-09-08</time>
     
   </p>
 </header>
@@ -100,8 +100,10 @@ j – 检测图像中的信息是否是用jsteg嵌入的。
 o – 检测图像中的信息是否是用outguess嵌入的。
 p – 检测图像中的信息是否是用jphide嵌入的。
 i – 检测图像中的信息是否是用invisible secrets嵌入的。
-</code></pre><p>当然误报率还是有的<br>outguess:outguess  -r ‘/root/Desktop/angrybird.jpg’  -t 11.txt</p>
-<h2 id="0x01_mp3stego"><a href="#0x01_mp3stego" class="headerlink" title="0x01 mp3stego"></a>0x01 mp3stego</h2><p>mp3stego(<a href="http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写" target="_blank" rel="external">http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写</a><br>使用非常简单<br>加密:encode -E hidden_text.txt -P pass svega.wav svega_stego.mp3<br>解密：decode -X -P pass svega_stego.mp3</p>
+</code></pre><p>当然误报率还是有的 </p>
+<h2 id="0x01_outguess"><a href="#0x01_outguess" class="headerlink" title="0x01 outguess"></a>0x01 outguess</h2><p>linux下载安装比较简单：<br><a href="http://download.csdn.net/detail/florak/5620983" target="_blank" rel="external">http://download.csdn.net/detail/florak/5620983</a><br>./configure &amp;&amp; make &amp;&amp; make install</p>
+<p>执行以下命令解密:<br>outguess  -r ‘/root/Desktop/angrybird.jpg’  -t 11.txt</p>
+<h2 id="0x02_mp3stego"><a href="#0x02_mp3stego" class="headerlink" title="0x02 mp3stego"></a>0x02 mp3stego</h2><p>mp3stego(<a href="http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写" target="_blank" rel="external">http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写</a><br>使用非常简单<br>加密:encode -E hidden_text.txt -P pass svega.wav svega_stego.mp3<br>解密：decode -X -P pass svega_stego.mp3</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -154,7 +156,7 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_Stegdetect"><span class="toc-number">1.</span> <span class="toc-text">0x00 Stegdetect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1_uFF0C_u5B89_u88C5"><span class="toc-number">1.1.</span> <span class="toc-text">1，安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><span class="toc-number">1.2.</span> <span class="toc-text">2，Stegdetect的主要选项如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_mp3stego"><span class="toc-number">2.</span> <span class="toc-text">0x01 mp3stego</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_Stegdetect"><span class="toc-number">1.</span> <span class="toc-text">0x00 Stegdetect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1_uFF0C_u5B89_u88C5"><span class="toc-number">1.1.</span> <span class="toc-text">1，安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><span class="toc-number">1.2.</span> <span class="toc-text">2，Stegdetect的主要选项如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_outguess"><span class="toc-number">2.</span> <span class="toc-text">0x01 outguess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02_mp3stego"><span class="toc-number">3.</span> <span class="toc-text">0x02 mp3stego</span></a></li></ol>
   </div>
 
 <div id="asidepart">
