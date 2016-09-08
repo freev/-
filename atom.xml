@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-08T02:56:49.670Z</updated>
+  <updated>2016-09-08T08:44:34.541Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,17 +15,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[ctf之伪加密]]></title>
+    <link href="http://yoursite.com/2016/09/08/ctf%E4%B9%8B%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E7%AF%87/"/>
+    <id>http://yoursite.com/2016/09/08/ctf之压缩文件篇/</id>
+    <published>2016-09-08T06:52:32.000Z</published>
+    <updated>2016-09-08T08:44:34.541Z</updated>
+    <content type="html"><![CDATA[<h2 id="0x00_u4F2A_u52A0_u5BC6"><a href="#0x00_u4F2A_u52A0_u5BC6" class="headerlink" title="0x00伪加密"></a>0x00伪加密</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="0x00_u4F2A_u52A0_u5BC6"><a href="#0x00_u4F2A_u52A0_u5BC6" class="headerlink" title="0x00伪加密"></a>0x00伪加密</h2>]]>
+    </summary>
+    
+      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ctf之隐写工具篇]]></title>
+    <link href="http://yoursite.com/2016/09/08/ctf%E4%B9%8B%E9%9A%90%E5%86%99%E5%B7%A5%E5%85%B7%E7%AF%87/"/>
+    <id>http://yoursite.com/2016/09/08/ctf之隐写工具篇/</id>
+    <published>2016-09-08T05:33:35.000Z</published>
+    <updated>2016-09-08T08:44:27.741Z</updated>
+    <content type="html"><![CDATA[<h2 id="0x00_Stegdetect"><a href="#0x00_Stegdetect" class="headerlink" title="0x00 Stegdetect"></a>0x00 Stegdetect</h2><p>Stegdetect程序主要用于分析JPEG文件，可以检测到通过JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX和Camouflage等这些隐写工具隐藏的信息</p>
+<h3 id="1_uFF0C_u5B89_u88C5"><a href="#1_uFF0C_u5B89_u88C5" class="headerlink" title="1，安装"></a>1，安装</h3><p>windows安装文件我没找到。我在kali安装Stegdetect比较简单<br>apt-get install stegdetect<br>OutGuess安装：<a href="https://github.com/crorvick/outguess.git" target="_blank" rel="external">https://github.com/crorvick/outguess.git</a><br>./configure &amp;&amp; make &amp;&amp; make install<br>Stegdetect通过统计测试来分析图像文件中是否包含隐藏内容。它运行静态测试以判断隐藏的内容是否存在。此外，它还会尝试识别隐藏内容是通过哪个隐写工具嵌入的。</p>
+<h3 id="2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><a href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A" class="headerlink" title="2，Stegdetect的主要选项如下："></a>2，Stegdetect的主要选项如下：</h3><pre><code>q – 仅显示可能包含隐藏内容的图像
+n – 启用检查JPEG文件头功能，以降低误报率。如果启用，所有带有批注区域的文件将被视为没有被嵌入信息。
+如果JPEG文件的JFIF标识符中的版本号不是1.1，则禁用OutGuess检测。
+s – 修改检测算法的敏感度，该值的默认值为1。检测结果的匹配度与检测算法的敏感度成正比，
+算法敏感度的值越大，检测出的可疑文件包含敏感信息的可能性越大。
+d – 打印带行号的调试信息。
+t – 设置要检测哪些隐写工具（默认检测jopi），可设置的选项如下：
+j – 检测图像中的信息是否是用jsteg嵌入的。
+o – 检测图像中的信息是否是用outguess嵌入的。
+p – 检测图像中的信息是否是用jphide嵌入的。
+i – 检测图像中的信息是否是用invisible secrets嵌入的。
+</code></pre><p>当然误报率还是有的<br>outguess:outguess  -r ‘/root/Desktop/angrybird.jpg’  -t 11.txt</p>
+<h2 id="0x01_mp3stego"><a href="#0x01_mp3stego" class="headerlink" title="0x01 mp3stego"></a>0x01 mp3stego</h2><p>mp3stego(<a href="http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写" target="_blank" rel="external">http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写</a><br>使用非常简单<br>加密:encode -E hidden_text.txt -P pass svega.wav svega_stego.mp3<br>解密：decode -X -P pass svega_stego.mp3</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="0x00_Stegdetect"><a href="#0x00_Stegdetect" class="headerlink" title="0x00 Stegdetect"></a>0x00 Stegdetect</h2><p>Stegdetect程序主要用于分析]]>
+    </summary>
+    
+      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[ctf之图片隐写总结]]></title>
     <link href="http://yoursite.com/2016/09/02/ctf%E4%B9%8B%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2016/09/02/ctf之图片隐写总结/</id>
     <published>2016-09-02T07:51:58.000Z</published>
-    <updated>2016-09-08T02:56:49.670Z</updated>
-    <content type="html"><![CDATA[<p>bmp<br></p>
+    <updated>2016-09-08T04:35:47.736Z</updated>
+    <content type="html"><![CDATA[<h2 id="0x00_BMP_u6587_u4EF6_u683C_u5F0F"><a href="#0x00_BMP_u6587_u4EF6_u683C_u5F0F" class="headerlink" title="0x00 BMP文件格式"></a>0x00 BMP文件格式</h2><p>关于BMP文件的详细格式信息请看这个链接<br><a href="http://www.cnblogs.com/tiandsp/archive/2012/10/22/2734552.html" target="_blank" rel="external">http://www.cnblogs.com/tiandsp/archive/2012/10/22/2734552.html</a><br>BMP文件的数据按照从文件头开始的先后顺序分为四个部分：<br>◆ 位图文件头(bmp file header)：  提供文件的格式、大小等信息<br>◆ 位图信息头(bitmap information)：提供图像数据的尺寸、位平面数、压缩方式、颜色索引等信息<br>◆ 调色板(color palette)：可选，如使用索引来表示图像，调色板就是索引与其对应的颜色的映射表<br>◆ 位图数据(bitmap data)：图像数据区</p>
+<p><img src="1.png" alt="Alt text"><br>下面是一道实验吧的题，需要自己补全bmp图片文件头，这是一个大神写的具体代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">header</span><span class="params">()</span>:</span></span><br><span class="line">    btype=<span class="string">'424d'</span> <span class="comment">#头标识</span></span><br><span class="line">    bsize=<span class="string">'360c 3000'</span> <span class="comment">#大小</span></span><br><span class="line">    bapp1=<span class="string">'0000'</span> <span class="comment">#指定应用</span></span><br><span class="line">    bapp2=<span class="string">'0000'</span> <span class="comment">#指定应用</span></span><br><span class="line">    boffset=<span class="string">'3600 0000'</span> <span class="comment">#偏移量这里是54</span></span><br><span class="line">    biSize=<span class="string">'2800 0000'</span> <span class="comment">#位图信息头的大小40</span></span><br><span class="line">    biWidth=<span class="string">'5605 0000'</span> <span class="comment">#宽度，本题1366</span></span><br><span class="line">    biHeight=<span class="string">'0003 0000'</span> <span class="comment">#高度，本题768</span></span><br><span class="line">    biPlanes=<span class="string">'0100'</span> <span class="comment">#颜色平面数，总为1</span></span><br><span class="line">    biBitCount=<span class="string">'1800'</span> <span class="comment">#比特数/像素，本题24位</span></span><br><span class="line">    biCompression=<span class="string">'0000 0000'</span> <span class="comment">#压缩类型，0为不压缩</span></span><br><span class="line">    biSizeImage=<span class="string">'0000 0000'</span> <span class="comment">#图像的大小，本题多少无所谓</span></span><br><span class="line">    biXPelsPerMeter=<span class="string">'0000 0000'</span> <span class="comment">#水平分辨率，缺省</span></span><br><span class="line">    biYPelsPerMeter=<span class="string">'0000 0000'</span> <span class="comment">#垂直分辨率，缺省</span></span><br><span class="line">    biClrUsed=<span class="string">'0000 0000'</span> <span class="comment">#使用的颜色索引数，本题多少无所谓</span></span><br><span class="line">    biClrImportant=<span class="string">'0000 0000'</span> <span class="comment">#重要的颜色索引数，本题多少无所谓</span></span><br><span class="line">    BMPheader=btype+bsize+bapp1+bapp2+boffset+biSize+biWidth+biHeight+biPlanes+biBitCount+biCompression</span><br><span class="line">    BMPheader=BMPheader+biSizeImage+biXPelsPerMeter+biYPelsPerMeter+biClrUsed+biClrImportant</span><br><span class="line">    <span class="keyword">return</span> BMPheader.replace(<span class="string">' '</span>,<span class="string">''</span>)</span><br><span class="line">ciphertext=open(<span class="string">'./bestwing12345678.bmp'</span>,<span class="string">'rb'</span>).read()</span><br><span class="line">f=open(<span class="string">'out.bmp'</span>,<span class="string">'wb'</span>)</span><br><span class="line">f.write(header().decode(<span class="string">'hex'</span>)+ciphertext)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<p>以上代码会补全会生成图片<br><img src="out1.bmp" alt="x"><br>这道题实际是AES加密大神代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># author:pcat</span></span><br><span class="line"><span class="comment"># http://pcat.cnblogs.com</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getBMPheader</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment">#bmp是LITTLE-ENDIAN（小字节序、低字节序）</span></span><br><span class="line">	bfType=<span class="string">'424d'</span> <span class="comment">#文件类型</span></span><br><span class="line">	bfSize=<span class="string">'360c 3000'</span> <span class="comment">#文件大小，本题3148800+54</span></span><br><span class="line">	bfReserved1=<span class="string">'0000'</span> <span class="comment">#保留，为0</span></span><br><span class="line">	bfReserved2=<span class="string">'0000'</span> <span class="comment">#保留，为0</span></span><br><span class="line">	bfOffBits=<span class="string">'3600 0000'</span> <span class="comment">#数据离文件头偏离量</span></span><br><span class="line">	biSize=<span class="string">'2800 0000'</span> <span class="comment">#位图信息头的大小</span></span><br><span class="line">	biWidth=<span class="string">'5605 0000'</span> <span class="comment">#宽度，本题1366</span></span><br><span class="line">	biHeight=<span class="string">'0003 0000'</span> <span class="comment">#高度，本题768</span></span><br><span class="line">	biPlanes=<span class="string">'0100'</span> <span class="comment">#颜色平面数，为1</span></span><br><span class="line">	biBitCount=<span class="string">'1800'</span> <span class="comment">#比特数/像素，本题24位</span></span><br><span class="line">	biCompression=<span class="string">'0000 0000'</span> <span class="comment">#压缩类型，0为不压缩</span></span><br><span class="line">	biSizeImage=<span class="string">'0000 0000'</span> <span class="comment">#图像的大小，本题多少无所谓</span></span><br><span class="line">	biXPelsPerMeter=<span class="string">'0000 0000'</span> <span class="comment">#水平分辨率，缺省</span></span><br><span class="line">	biYPelsPerMeter=<span class="string">'0000 0000'</span> <span class="comment">#垂直分辨率，缺省</span></span><br><span class="line">	biClrUsed=<span class="string">'0000 0000'</span> <span class="comment">#使用的颜色索引数，本题多少无所谓</span></span><br><span class="line">	biClrImportant=<span class="string">'0000 0000'</span> <span class="comment">#重要的颜色索引数，本题多少无所谓</span></span><br><span class="line">	bmp_header=bfType+bfSize+bfReserved1+bfReserved2+bfOffBits</span><br><span class="line">	bmp_header+=biSize+biWidth+biHeight+biPlanes+biBitCount+biCompression+biSizeImage</span><br><span class="line">	bmp_header+=biXPelsPerMeter+biYPelsPerMeter+biClrUsed+biClrImportant</span><br><span class="line">	bmp_header=bmp_header.replace(<span class="string">' '</span>,<span class="string">''</span>)</span><br><span class="line">	<span class="keyword">return</span> bmp_header</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">	ciphertext=open(<span class="string">'bestwing12345678.bmp'</span>,<span class="string">'rb'</span>).read() <span class="comment">#记得有'b'</span></span><br><span class="line">	key=<span class="string">'bestwing12345678'</span></span><br><span class="line">	obj=AES.new(key,AES.MODE_ECB)</span><br><span class="line">	message=obj.decrypt(ciphertext)</span><br><span class="line">	fsave=open(<span class="string">'out.bmp'</span>,<span class="string">'wb'</span>) <span class="comment">#记得有'b'</span></span><br><span class="line">	fsave.write(getBMPheader().decode(<span class="string">'hex'</span>)+message)</span><br><span class="line">	fsave.close()</span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	foo()</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'ok'</span></span><br></pre></td></tr></table></figure></p>
+<p>扫描二维码拿到flag：<br><img src="out.bmp" alt="x"><br>相关链接<br><a href="http://www.cnblogs.com/l2rf/p/5643352.html" target="_blank" rel="external">http://www.cnblogs.com/l2rf/p/5643352.html</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>bmp<br></p>
-]]>
+    <![CDATA[<h2 id="0x00_BMP_u6587_u4EF6_u683C_u5F0F"><a href="#0x00_BMP_u6587_u4EF6_u683C_u5F0F" class="headerlink" title="0x00 BMP文件格式"></a>0x00 BMP文件]]>
     </summary>
+    
+      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
     
   </entry>
   
@@ -106,28 +156,6 @@
 <h2 id="0x02__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x02__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x02 配置文件单引号"></a>0x02 配置文件单引号</h2><h2 id="0x03__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x03__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x03 配置文件单引号"></a>0x03 配置文件单引号</h2>]]></content>
     <summary type="html">
     <![CDATA[<span id="busuanzi_container_page_pv"></span>]]>
-    
-    </summary>
-    
-      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[后ss]]></title>
-    <link href="http://yoursite.com/2016/02/06/xxss/"/>
-    <id>http://yoursite.com/2016/02/06/xxss/</id>
-    <published>2016-02-06T11:03:24.000Z</published>
-    <updated>2016-09-02T05:19:03.802Z</updated>
-    <content type="html"><![CDATA[<p>photos:</p>
-<ul>
-<li><a href="http://ctf5.shiyanbar.com/stega/123456.jpg" target="_blank" rel="external">http://ctf5.shiyanbar.com/stega/123456.jpg</a></li>
-<li><a href="http://ctf5.shiyanbar.com/stega/123456.jpg" target="_blank" rel="external">http://ctf5.shiyanbar.com/stega/123456.jpg</a></li>
-</ul>
-<hr>
-]]></content>
-    <summary type="html">
-    <![CDATA[你对本页的描述]]>
     
     </summary>
     
