@@ -79,7 +79,7 @@
 		</span>
   <p class="article-time">
     <time datetime="2016-09-08T05:33:35.000Z" itemprop="datePublished">2016-09-08</time>
-    更新日期:<time datetime="2016-10-06T00:36:47.504Z" itemprop="dateModified">2016-10-06</time>
+    更新日期:<time datetime="2016-10-06T03:27:11.841Z" itemprop="dateModified">2016-10-06</time>
     
   </p>
 </header>
@@ -103,14 +103,15 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
 <h2 id="0x01_outguess"><a href="#0x01_outguess" class="headerlink" title="0x01 outguess"></a>0x01 outguess</h2><p>linux下载安装比较简单：<br><a href="http://download.csdn.net/detail/florak/5620983" target="_blank" rel="external">http://download.csdn.net/detail/florak/5620983</a><br>./configure &amp;&amp; make &amp;&amp; make install</p>
 <p>执行以下命令解密:<br>outguess  -r ‘/root/Desktop/angrybird.jpg’  -t 11.txt</p>
 <h2 id="0x02_mp3stego"><a href="#0x02_mp3stego" class="headerlink" title="0x02 mp3stego"></a>0x02 mp3stego</h2><p>mp3stego(<a href="http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写" target="_blank" rel="external">http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写</a><br>使用非常简单<br>加密:encode -E hidden_text.txt -P pass svega.wav svega_stego.mp3<br>解密：decode -X -P pass svega_stego.mp3</p>
-<h2 id="0x03_binwalk_dd"><a href="#0x03_binwalk_dd" class="headerlink" title="0x03 binwalk dd"></a>0x03 binwalk dd</h2><p>linux下binwalk命令常用于分析隐写文件，dd命令用于提取文件。<br>分析：</p>
-<pre><code>root@kali:~/Desktop# binwalk  baozou_new.jpg 
-DECIMAL       HEX           DESCRIPTION
+<h2 id="0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4"><a href="#0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4" class="headerlink" title="0x03 binwalk,dd,foremost命令"></a>0x03 binwalk,dd,foremost命令</h2><p>linux下binwalk命令常用于分析隐写文件，dd命令用于提取文件。<br>分析：<br>    root@kali:~/Desktop# binwalk  baozou_new.jpg </p>
+<pre><code>DECIMAL       HEX           DESCRIPTION
 -------------------------------------------------------------------------------------------------------------------
 0             0x0           JPEG image data, JFIF standard  1.01
 4308          0x10D4        Zip encrypted archive data, at least v2.0 to extract, compressed size: 8890,  uncompressed size: 9990, name: &quot;qr.png&quot;  
-</code></pre><p>可以看出 0x10D4位置后是zip文件。<br>提取文件：</p>
-<p>root@kali:~/Desktop# dd if=baozou_new.jpg of=2.zip bs=1 skip=4308<br>9065+0 records in<br>9065+0 records out<br>9065 bytes (9.1 kB) copied, 0.0475933 s, 190 kB/s</p>
+</code></pre><p>可以看出 0x10D4位置后是zip文件。<br>提取文件：<br>root@kali:~/Desktop# dd if=baozou_new.jpg of=2.zip bs=1 skip=4308<br>9065+0 records in<br>9065+0 records out<br>9065 bytes (9.1 kB) copied, 0.0475933 s, 190 kB/s</p>
+<p>foremost命令同样可以达到效果：<br>foremost  -v -i baozou_new.jpg  -o  /root/Desktop/xx<br>支持恢复如下格式：avi, bmp, dll, doc, exe, gif, htm, jar, jpg, mbd, mov, mpg, pdf, png, ppt, rar, rif, sdw, sx, sxc, sxi,<br>sxw, vis, wav, wmv, xls, zip。</p>
+<h2 id="0x04_F5-steganography"><a href="#0x04_F5-steganography" class="headerlink" title="0x04 F5-steganography"></a>0x04 F5-steganography</h2><p>git clone <a href="https://github.com/matthewgao/F5-steganography" target="_blank" rel="external">https://github.com/matthewgao/F5-steganography</a><br>cd F5-steganography<br>java Extract ../123456.jpg -p 123456<br>后会生成output.txt文件，里面就有flag了</p>
+<h2 id="0x05_steghide"><a href="#0x05_steghide" class="headerlink" title="0x05 steghide"></a>0x05 steghide</h2><p>官网地址：<a href="http://steghide.sourceforge.net/documentation.php" target="_blank" rel="external">http://steghide.sourceforge.net/documentation.php</a><br>在文件中隐藏数据<br>    steghide –embed -cf /root/Desktop/1111.jpg -ef /root/Desktop/embeddate<br>检查图片中隐藏的信息<br>    steghide info  /root/Desktop/1111.jpg<br>steghide extract -sf background.jpg</p>
 <pre><code>Author:FreeV
 </code></pre>  
 	</div>
@@ -164,7 +165,7 @@ DECIMAL       HEX           DESCRIPTION
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_Stegdetect"><span class="toc-number">1.</span> <span class="toc-text">0x00 Stegdetect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1_uFF0C_u5B89_u88C5"><span class="toc-number">1.1.</span> <span class="toc-text">1，安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><span class="toc-number">1.2.</span> <span class="toc-text">2，Stegdetect的主要选项如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_outguess"><span class="toc-number">2.</span> <span class="toc-text">0x01 outguess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02_mp3stego"><span class="toc-number">3.</span> <span class="toc-text">0x02 mp3stego</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03_binwalk_dd"><span class="toc-number">4.</span> <span class="toc-text">0x03 binwalk dd</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_Stegdetect"><span class="toc-number">1.</span> <span class="toc-text">0x00 Stegdetect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1_uFF0C_u5B89_u88C5"><span class="toc-number">1.1.</span> <span class="toc-text">1，安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><span class="toc-number">1.2.</span> <span class="toc-text">2，Stegdetect的主要选项如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_outguess"><span class="toc-number">2.</span> <span class="toc-text">0x01 outguess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02_mp3stego"><span class="toc-number">3.</span> <span class="toc-text">0x02 mp3stego</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4"><span class="toc-number">4.</span> <span class="toc-text">0x03 binwalk,dd,foremost命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04_F5-steganography"><span class="toc-number">5.</span> <span class="toc-text">0x04 F5-steganography</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05_steghide"><span class="toc-number">6.</span> <span class="toc-text">0x05 steghide</span></a></li></ol>
   </div>
 
 <div id="asidepart">
