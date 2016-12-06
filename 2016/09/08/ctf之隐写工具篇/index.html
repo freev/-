@@ -1,0 +1,405 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>ctf之隐写工具篇 | FreeV&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="FreeV">
+    
+    <meta name="description" itemprop="description" content="Stegdetect程序主要用于分析JPEG文件，可以检测到通过JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX和Camouflage等这些隐写工具隐藏的信息">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="FreeV&#39;s Blog" title="FreeV&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeV&#39;s Blog">FreeV&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/08/ctf之隐写工具篇/" title="ctf之隐写工具篇" itemprop="url">ctf之隐写工具篇</a>
+  </h1>
+  
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="FreeV">FreeV</a>
+    </p>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="busuanzi_container_page_pv">
+			本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+  <p class="article-time">
+    <time datetime="2016-09-08T05:33:35.000Z" itemprop="datePublished">2016-09-08</time>
+    更新日期:<time datetime="2016-10-06T03:27:11.841Z" itemprop="dateModified">2016-10-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h2 id="0x00_Stegdetect"><a href="#0x00_Stegdetect" class="headerlink" title="0x00 Stegdetect"></a>0x00 Stegdetect</h2><p>Stegdetect程序主要用于分析JPEG文件，可以检测到通过JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX和Camouflage等这些隐写工具隐藏的信息</p>
+<h3 id="1_uFF0C_u5B89_u88C5"><a href="#1_uFF0C_u5B89_u88C5" class="headerlink" title="1，安装"></a>1，安装</h3><p>windows安装文件我没找到。我在kali安装Stegdetect比较简单<br>apt-get install stegdetect<br>OutGuess安装：<a href="https://github.com/crorvick/outguess.git" target="_blank" rel="external">https://github.com/crorvick/outguess.git</a><br>./configure &amp;&amp; make &amp;&amp; make install<br>Stegdetect通过统计测试来分析图像文件中是否包含隐藏内容。它运行静态测试以判断隐藏的内容是否存在。此外，它还会尝试识别隐藏内容是通过哪个隐写工具嵌入的。</p>
+<h3 id="2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><a href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A" class="headerlink" title="2，Stegdetect的主要选项如下："></a>2，Stegdetect的主要选项如下：</h3><pre><code>q – 仅显示可能包含隐藏内容的图像
+n – 启用检查JPEG文件头功能，以降低误报率。如果启用，所有带有批注区域的文件将被视为没有被嵌入信息。
+如果JPEG文件的JFIF标识符中的版本号不是1.1，则禁用OutGuess检测。
+s – 修改检测算法的敏感度，该值的默认值为1。检测结果的匹配度与检测算法的敏感度成正比，
+算法敏感度的值越大，检测出的可疑文件包含敏感信息的可能性越大。
+d – 打印带行号的调试信息。
+t – 设置要检测哪些隐写工具（默认检测jopi），可设置的选项如下：
+j – 检测图像中的信息是否是用jsteg嵌入的。
+o – 检测图像中的信息是否是用outguess嵌入的。
+p – 检测图像中的信息是否是用jphide嵌入的。
+i – 检测图像中的信息是否是用invisible secrets嵌入的。
+</code></pre><p>当然误报率还是有的 </p>
+<h2 id="0x01_outguess"><a href="#0x01_outguess" class="headerlink" title="0x01 outguess"></a>0x01 outguess</h2><p>linux下载安装比较简单：<br><a href="http://download.csdn.net/detail/florak/5620983" target="_blank" rel="external">http://download.csdn.net/detail/florak/5620983</a><br>./configure &amp;&amp; make &amp;&amp; make install</p>
+<p>执行以下命令解密:<br>outguess  -r ‘/root/Desktop/angrybird.jpg’  -t 11.txt</p>
+<h2 id="0x02_mp3stego"><a href="#0x02_mp3stego" class="headerlink" title="0x02 mp3stego"></a>0x02 mp3stego</h2><p>mp3stego(<a href="http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写" target="_blank" rel="external">http://www.petitcolas.net/steganography/mp3stego/)主要用于mp3隐写</a><br>使用非常简单<br>加密:encode -E hidden_text.txt -P pass svega.wav svega_stego.mp3<br>解密：decode -X -P pass svega_stego.mp3</p>
+<h2 id="0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4"><a href="#0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4" class="headerlink" title="0x03 binwalk,dd,foremost命令"></a>0x03 binwalk,dd,foremost命令</h2><p>linux下binwalk命令常用于分析隐写文件，dd命令用于提取文件。<br>分析：<br>    root@kali:~/Desktop# binwalk  baozou_new.jpg </p>
+<pre><code>DECIMAL       HEX           DESCRIPTION
+-------------------------------------------------------------------------------------------------------------------
+0             0x0           JPEG image data, JFIF standard  1.01
+4308          0x10D4        Zip encrypted archive data, at least v2.0 to extract, compressed size: 8890,  uncompressed size: 9990, name: &quot;qr.png&quot;  
+</code></pre><p>可以看出 0x10D4位置后是zip文件。<br>提取文件：<br>root@kali:~/Desktop# dd if=baozou_new.jpg of=2.zip bs=1 skip=4308<br>9065+0 records in<br>9065+0 records out<br>9065 bytes (9.1 kB) copied, 0.0475933 s, 190 kB/s</p>
+<p>foremost命令同样可以达到效果：<br>foremost  -v -i baozou_new.jpg  -o  /root/Desktop/xx<br>支持恢复如下格式：avi, bmp, dll, doc, exe, gif, htm, jar, jpg, mbd, mov, mpg, pdf, png, ppt, rar, rif, sdw, sx, sxc, sxi,<br>sxw, vis, wav, wmv, xls, zip。</p>
+<h2 id="0x04_F5-steganography"><a href="#0x04_F5-steganography" class="headerlink" title="0x04 F5-steganography"></a>0x04 F5-steganography</h2><p>git clone <a href="https://github.com/matthewgao/F5-steganography" target="_blank" rel="external">https://github.com/matthewgao/F5-steganography</a><br>cd F5-steganography<br>java Extract ../123456.jpg -p 123456<br>后会生成output.txt文件，里面就有flag了</p>
+<h2 id="0x05_steghide"><a href="#0x05_steghide" class="headerlink" title="0x05 steghide"></a>0x05 steghide</h2><p>官网地址：<a href="http://steghide.sourceforge.net/documentation.php" target="_blank" rel="external">http://steghide.sourceforge.net/documentation.php</a><br>在文件中隐藏数据<br>    steghide –embed -cf /root/Desktop/1111.jpg -ef /root/Desktop/embeddate<br>检查图片中隐藏的信息<br>    steghide info  /root/Desktop/1111.jpg<br>steghide extract -sf background.jpg</p>
+<pre><code>Author:FreeV
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/隐写/">隐写</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2016/09/08/ctf之隐写工具篇/" data-title="ctf之隐写工具篇 | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/09/08/ctf之压缩文件/" title="ctf之压缩文件">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  ctf之压缩文件</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/09/02/ctf之图片隐写总结/"  title="ctf之图片隐写总结">
+ <strong>NEXT:</strong><br/> 
+ <span>ctf之图片隐写总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00_Stegdetect"><span class="toc-number">1.</span> <span class="toc-text">0x00 Stegdetect</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1_uFF0C_u5B89_u88C5"><span class="toc-number">1.1.</span> <span class="toc-text">1，安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2_uFF0CStegdetect_u7684_u4E3B_u8981_u9009_u9879_u5982_u4E0B_uFF1A"><span class="toc-number">1.2.</span> <span class="toc-text">2，Stegdetect的主要选项如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01_outguess"><span class="toc-number">2.</span> <span class="toc-text">0x01 outguess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02_mp3stego"><span class="toc-number">3.</span> <span class="toc-text">0x02 mp3stego</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03_binwalk_2Cdd_2Cforemost_u547D_u4EE4"><span class="toc-number">4.</span> <span class="toc-text">0x03 binwalk,dd,foremost命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04_F5-steganography"><span class="toc-number">5.</span> <span class="toc-text">0x04 F5-steganography</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05_steghide"><span class="toc-number">6.</span> <span class="toc-text">0x05 steghide</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/php代码安全/" title="php代码安全">php代码安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/tags/sql注入/" title="sql注入">sql注入<sup>1</sup></a></li>
+		
+			<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
+		
+			<li><a href="/tags/加密解密/" title="加密解密">加密解密<sup>1</sup></a></li>
+		
+			<li><a href="/tags/渗透技巧/" title="渗透技巧">渗透技巧<sup>3</sup></a></li>
+		
+			<li><a href="/tags/社会工程学/" title="社会工程学">社会工程学<sup>1</sup></a></li>
+		
+			<li><a href="/tags/隐写/" title="隐写">隐写<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/php代码安全/" style="font-size: 10px;">php代码安全</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/sql注入/" style="font-size: 10px;">sql注入</a> <a href="/tags/代码审计/" style="font-size: 15px;">代码审计</a> <a href="/tags/加密解密/" style="font-size: 10px;">加密解密</a> <a href="/tags/渗透技巧/" style="font-size: 20px;">渗透技巧</a> <a href="/tags/社会工程学/" style="font-size: 10px;">社会工程学</a> <a href="/tags/隐写/" style="font-size: 20px;">隐写</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian"></a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo"></a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	 
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://yoursite.com" target="_blank" title="FreeV">FreeV</a>
+		
+		<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+		</p>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"freev"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>
