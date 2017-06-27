@@ -79,7 +79,7 @@
 		</span>
   <p class="article-time">
     <time datetime="2017-05-01T12:04:32.000Z" itemprop="datePublished">2017-05-01</time>
-    更新日期:<time datetime="2017-05-01T14:43:53.323Z" itemprop="dateModified">2017-05-01</time>
+    更新日期:<time datetime="2017-05-02T03:04:56.911Z" itemprop="dateModified">2017-05-02</time>
     
   </p>
 </header>
@@ -90,7 +90,7 @@
 <p>这里以163邮箱为例，我们给我们想收集的公司发一个邮件：在添加图片按钮处选择网址url，然后填入自己外网服务器一个链接。<br><img src="./1111.png" width="80%" height="200" alt=""><br>这里也可以写一些简单的东西，欺骗一下读者，然后发送给对方，当对象打开邮箱查看时，你就可以查看自己的日志，以你为我用的是apache，这里就以apache为例：<br><img src="./2222.png" width="100%" height="10%" alt=""><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">15.0.0.0 - - [01/May/2017:20:30:24 +0800] "GET /init.php HTTP/1.1" 200 224 "https://mail.qq.com/" </span><br><span class="line">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924</span><br></pre></td></tr></table></figure></p>
 <p>通过图片我们看出对方出口ip为：<br>    <em>.</em>.<em>.</em>(第一个字段)<br>    通过qq网页版打开<br>    使用chrome</p>
 <p></p>
-<h2 id="0x01__u603B_u7ED3"><a href="#0x01__u603B_u7ED3" class="headerlink" title="0x01 总结"></a>0x01 总结</h2><p>这些信息在我们的渗透着还是有很大用处的，这里是以email为例。同样如果公司系统存在留言功能之类系统，同样可以利用，这里不再举例,；可以判断公司真实ip，以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。</p>
+<h2 id="0x01__u603B_u7ED3"><a href="#0x01__u603B_u7ED3" class="headerlink" title="0x01 总结"></a>0x01 总结</h2><p>这些信息在我们的渗透着还是有很大用处的，这里是以email为例。同样如果公司系统存在留言功能之类系统，同样可以利用，这里不再举例,；可以判断公司真实ip，根据ip锁定地址（<a href="http://www.ipip.net/）以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。" target="_blank" rel="external">http://www.ipip.net/）以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。</a></p>
 <pre><code>Author:FreeV
 </code></pre><style>
     table{
@@ -109,6 +109,7 @@
         font-size: 18px;
         color:red;
     } 
+
 </style>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -132,6 +133,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/06/27/某ctf注入bypass/" title="某ctf注入bypass">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  某ctf注入bypass</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/02/16/powershell渗透中的应用/"  title="powershell渗透中的应用">
@@ -171,7 +180,7 @@
 		
 			<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
 		
-			<li><a href="/tags/sql注入/" title="sql注入">sql注入<sup>1</sup></a></li>
+			<li><a href="/tags/sql注入/" title="sql注入">sql注入<sup>2</sup></a></li>
 		
 			<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>3</sup></a></li>
 		
@@ -193,7 +202,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/php代码安全/" style="font-size: 10px;">php代码安全</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/sql注入/" style="font-size: 10px;">sql注入</a> <a href="/tags/代码审计/" style="font-size: 16.67px;">代码审计</a> <a href="/tags/信息收集/" style="font-size: 10px;">信息收集</a> <a href="/tags/加密解密/" style="font-size: 10px;">加密解密</a> <a href="/tags/渗透技巧/" style="font-size: 20px;">渗透技巧</a> <a href="/tags/社会工程学/" style="font-size: 10px;">社会工程学</a> <a href="/tags/隐写/" style="font-size: 16.67px;">隐写</a>
+       <a href="/tags/php代码安全/" style="font-size: 10px;">php代码安全</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/sql注入/" style="font-size: 13.33px;">sql注入</a> <a href="/tags/代码审计/" style="font-size: 16.67px;">代码审计</a> <a href="/tags/信息收集/" style="font-size: 10px;">信息收集</a> <a href="/tags/加密解密/" style="font-size: 10px;">加密解密</a> <a href="/tags/渗透技巧/" style="font-size: 20px;">渗透技巧</a> <a href="/tags/社会工程学/" style="font-size: 10px;">社会工程学</a> <a href="/tags/隐写/" style="font-size: 16.67px;">隐写</a>
     </div>
   </div>
 

