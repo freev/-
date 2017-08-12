@@ -79,7 +79,7 @@
 		</span>
   <p class="article-time">
     <time datetime="2017-06-27T06:02:15.000Z" itemprop="datePublished">2017-06-27</time>
-    更新日期:<time datetime="2017-06-27T06:46:11.432Z" itemprop="dateModified">2017-06-27</time>
+    更新日期:<time datetime="2017-08-12T02:45:48.813Z" itemprop="dateModified">2017-08-12</time>
     
   </p>
 </header>
@@ -92,7 +92,24 @@
 <h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>原理总结<br>desc  遇到`– `  (注意两个-)会把第一个`(反引号)当成注释：<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc <span class="escape">`f</span>lag<span class="escape">`-</span>- <span class="escape">`w</span>here id = <span class="number">1</span>#`</span><br></pre></td></tr></table></figure></p>
 <p>但是在select语句种遇到`– `不会当注释:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> <span class="string">'flag&#123;xxx&#125;'</span> <span class="keyword">from</span> flag<span class="string">`-- `</span><span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>#<span class="string">`</span></span></span><br></pre></td></tr></table></figure></p>
 <pre><code>`-- `可以用`/**/ `代替，但是desc `flag`/**/`where id = 1#` 不会返回内容，更多知识大家可以去探索，如果利用这道题会被拦截
-</code></pre>  
+</code></pre><style>
+
+    .code pre{
+        background: #272727;
+        border:2px solid #000;
+        color:white;
+        font-size: 15px;
+    };
+    .code pre span{
+        font-size: 10px;
+    }
+    .gutter pre{
+        font-size: 15px;
+        color:red;
+
+    } 
+
+</style>  
 	</div>
 		<footer class="article-footer clearfix">
 

